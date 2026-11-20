@@ -1,0 +1,6 @@
+{
+  "name": "J.D. Associates — Precision Shafts & Automotive Components",
+  "description": "Manufacturer of precision shafts, axle shafts, cardan shafts, connecting rods, cams, gears, and custom CNC/VMC machined components in Faridabad, Haryana, India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
