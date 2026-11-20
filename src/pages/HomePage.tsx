@@ -438,118 +438,141 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* INDUSTRIES: one row of photo panels. The active panel opens to show details,
-            the rest stay as slim photo strips. Hover, focus or tap a panel to open it.
-            On phones the same panels stack and open downward. */}
-        <section className="py-20 lg:py-28">
+        {/* INDUSTRIES: image-led selector with a numbered list of applications */}
+        <section className="bg-[#F8F9F8] py-20 lg:py-28" aria-labelledby="industries-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
-              <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight">
-                Industries we serve
-              </h2>
+            <div className="mb-9 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#8A6414]">
+                  Applications
+                </p>
+                <h2
+                  id="industries-heading"
+                  className="font-display text-4xl font-bold tracking-tight sm:text-5xl"
+                >
+                  Industries we serve
+                </h2>
+              </div>
               <Link
                 to="/industries/"
-                className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#8A6414] transition-colors"
+                className="inline-flex w-fit items-center gap-2 text-sm font-semibold transition-colors hover:text-[#155EEF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] focus-visible:ring-offset-4"
               >
                 See all applications
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
 
-            <div className="flex flex-col lg:flex-row gap-3 lg:h-[540px]">
-              {INDUSTRIES_LIST.map((industry, i) => {
-                const confirmed = industry.verificationStatus === 'confirmed';
-                const active = i === activeIndustry;
-                return (
-                  <div
-                    key={industry.id}
-                    onMouseEnter={() => setActiveIndustry(i)}
-                    onFocus={() => setActiveIndustry(i)}
-                    onClick={() => setActiveIndustry(i)}
-                    className={`group relative isolate overflow-hidden rounded-xl bg-[#0E2A2D] cursor-pointer transition-[flex-grow,height] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] lg:min-w-[84px] ${
-                      active ? 'h-[460px] lg:h-auto lg:grow-[6]' : 'h-24 lg:h-auto lg:grow-[1]'
-                    } lg:basis-0`}
-                  >
-                    <div className="absolute inset-0 -z-10">
+            <div className="grid grid-cols-1 items-center gap-9 lg:grid-cols-2 lg:gap-16">
+              <div>
+                {INDUSTRIES_LIST.map((industry, i) =>
+                  i === activeIndustry ? (
+                    <motion.div
+                      key={industry.id}
+                      initial={reduced ? false : { opacity: 0.7 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.35 }}
+                      className="relative isolate aspect-[5/4] overflow-hidden rounded-2xl bg-[#0E2A2D] shadow-xl shadow-[#0E2A2D]/15"
+                    >
                       <Photo
                         id={IMAGES.industries[i % IMAGES.industries.length]}
-                        w={1200}
-                        className={`transition-transform duration-700 ${active ? 'scale-100' : 'scale-110'}`}
+                        w={1600}
+                        className="absolute inset-0 transition-transform duration-700"
                       />
-                      <div
-                        className={`absolute inset-0 transition-colors duration-500 ${
-                          active
-                            ? 'bg-gradient-to-t from-[#0E2A2D] via-[#0E2A2D]/55 to-transparent'
-                            : 'bg-[#0E2A2D]/65 group-hover:bg-[#0E2A2D]/50'
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D]/90 via-[#0E2A2D]/5 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                        <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base">
+                          {industry.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ) : null,
+                )}
+                <div className="mt-4 flex items-center justify-center gap-2" aria-label="Choose industry image">
+                  {INDUSTRIES_LIST.map((industry, i) => (
+                    <button
+                      key={industry.id}
+                      type="button"
+                      onClick={() => setActiveIndustry(i)}
+                      aria-label={`Show ${industry.title}`}
+                      aria-pressed={i === activeIndustry}
+                      className="flex h-6 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] focus-visible:ring-offset-2"
+                    >
+                      <span
+                        className={`h-1.5 rounded-full transition-all ${
+                          i === activeIndustry ? 'w-7 bg-[#155EEF]' : 'w-1.5 bg-[#CBD2D1]'
                         }`}
                       />
-                    </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-                    {/* Collapsed state: status icon and the title, set vertically on desktop */}
-                    <div
-                      className={`absolute inset-0 flex items-center gap-4 p-5 transition-opacity duration-300 lg:flex-col lg:items-start lg:justify-between lg:p-5 ${
-                        active ? 'pointer-events-none opacity-0' : 'opacity-100 delay-200'
-                      }`}
-                      aria-hidden={active}
-                    >
-                      {confirmed ? (
-                        <CheckCircle2 className="h-5 w-5 shrink-0 text-[#D9A441]" aria-hidden="true" />
-                      ) : (
-                        <AlertCircle className="h-5 w-5 shrink-0 text-white/70" aria-hidden="true" />
-                      )}
-                      <h3 className="font-display text-base font-bold text-white lg:text-lg lg:[writing-mode:vertical-rl] lg:rotate-180 lg:self-start">
-                        {industry.title}
-                      </h3>
-                    </div>
+              <ol className="border-t border-[#0B1A1C]/15">
+                {INDUSTRIES_LIST.map((industry, i) => {
+                  const active = i === activeIndustry;
+                  const confirmed = industry.verificationStatus === 'confirmed';
 
-                    {/* Open state: full details */}
-                    <div
-                      className={`absolute inset-x-0 bottom-0 p-6 sm:p-8 transition-all duration-500 ${
-                        active
-                          ? 'translate-y-0 opacity-100 delay-150'
-                          : 'pointer-events-none translate-y-3 opacity-0'
-                      }`}
-                    >
-                      <div className="max-w-md">
-                        <span
-                          className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-                            confirmed ? 'bg-[#D9A441] text-[#0B1A1C]' : 'bg-white/20 text-white'
-                          }`}
-                        >
-                          {confirmed ? (
-                            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                          ) : (
-                            <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
-                          )}
-                          {industry.verificationLabel}
-                        </span>
-                        <h3 className="font-display text-2xl lg:text-3xl font-bold text-white leading-tight">
-                          {industry.title}
-                        </h3>
-                        <p className="mt-3 text-sm text-white/80 leading-relaxed">{industry.description}</p>
-                        <Link
-                          to={`/industries/#${industry.id}`}
-                          tabIndex={active ? 0 : -1}
-                          className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#D9A441] hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E2A2D]"
-                        >
-                          View details
-                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                        </Link>
-                      </div>
-                    </div>
-
-                    {/* Keyboard handle for collapsed panels */}
-                    {!active && (
+                  return (
+                    <li key={industry.id} className="border-b border-[#0B1A1C]/15">
                       <button
                         type="button"
                         onClick={() => setActiveIndustry(i)}
-                        aria-label={`Show ${industry.title}`}
-                        className="absolute inset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#D9A441]"
-                      />
-                    )}
-                  </div>
-                );
-              })}
+                        aria-pressed={active}
+                        className="group grid w-full grid-cols-[2rem_minmax(0,1fr)_2.5rem] items-start gap-3 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#155EEF] sm:grid-cols-[2rem_minmax(0,1fr)_2.75rem] sm:gap-4 sm:py-6"
+                      >
+                        <span
+                          className={`pt-1 font-mono text-xs tabular-nums transition-colors ${
+                            active ? 'text-[#155EEF]' : 'text-[#A4AEAD]'
+                          }`}
+                        >
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="min-w-0">
+                          <span
+                            className={`block font-display text-lg font-bold leading-snug transition-colors sm:text-xl ${
+                              active ? 'text-[#155EEF]' : 'text-[#0B1A1C] group-hover:text-[#155EEF]'
+                            }`}
+                          >
+                            {industry.title}
+                          </span>
+                          {active && (
+                            <span className="mt-2 block">
+                              <span
+                                className={`mb-2 inline-flex items-center gap-1.5 text-[11px] font-semibold ${
+                                  confirmed ? 'text-[#8A6414]' : 'text-[#64736F]'
+                                }`}
+                              >
+                                {confirmed ? (
+                                  <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
+                                ) : (
+                                  <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
+                                )}
+                                {industry.verificationLabel}
+                              </span>
+                              <span className="block text-sm leading-relaxed text-[#74817F]">
+                                {industry.description}
+                              </span>
+                            </span>
+                          )}
+                        </span>
+                        <span
+                          className={`mt-0.5 flex h-8 w-8 items-center justify-center rounded-full transition-all sm:h-9 sm:w-9 ${
+                            active
+                              ? 'bg-[#155EEF] text-white'
+                              : 'text-[#526568] group-hover:bg-[#155EEF]/10 group-hover:text-[#155EEF]'
+                          }`}
+                        >
+                          {active ? (
+                            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                          ) : (
+                            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                          )}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
         </section>
