@@ -16,6 +16,7 @@ import {
 import { SeoHead } from '../components/SeoHead';
 import { CountUpMetric } from '../components/CountUpMetric';
 import { FaqAccordion } from '../components/FaqAccordion';
+import { ProductImage } from '../components/ProductImage';
 import { PageShell, RevealBlock } from '../components/MotionPrimitives';
 import {
   COMPANY_FACTS,
@@ -26,8 +27,8 @@ import {
   WHY_CHOOSE_ITEMS,
 } from '../data/companyData';
 
-/* Palette: deep teal (cutting-fluid green) + brass, taken from the gold drill-bit photo.
-   teal  #0E2A2D   teal-2 #14393D   brass #D9A441   mist #EEF2F1   ink #0B1A1C */
+/* Palette: logo-inspired blue and orange.
+   blue  #075B91   blue-2 #064B79   orange #E45532   mist #EEF5FA   ink #102A43 */
 
 const unsplash = (id: string, w = 1400) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=${w}`;
@@ -35,16 +36,6 @@ const unsplash = (id: string, w = 1400) =>
 const IMAGES = {
   hero: '1740209475472-aa7d280f7452',
   floor: '1787039467622-ddec5c24320c',
-  cta: '1764114235916-74de69e6851f',
-  productByKeyword: [
-    ['axle', '1666634157070-6fd830fb5672'],
-    ['cardan', '1735494033576-9c882e80504c'],
-    ['connecting', '1769147339214-076740872485'],
-    ['cam', '1666618090858-fbcee636bd3e'],
-    ['metal shaft', '1713371398485-7bde1bde9def'],
-    ['custom', '1713371398484-cc4e4f6a262a'],
-  ] as [string, string][],
-  productDefault: '1740209475472-aa7d280f7452',
   industries: [
     '1740209475472-aa7d280f7452',
     '1764114235891-66ff86abaf87',
@@ -52,11 +43,6 @@ const IMAGES = {
     '1764114235896-034c8772de01',
     '1787039467622-ddec5c24320c',
   ],
-};
-
-const productPhoto = (title: string) => {
-  const t = title.toLowerCase();
-  return IMAGES.productByKeyword.find(([k]) => t.includes(k))?.[1] ?? IMAGES.productDefault;
 };
 
 function Photo({
@@ -73,7 +59,7 @@ function Photo({
   priority?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
-  if (failed) return <div className={`h-full w-full bg-[#14393D] ${className}`} />;
+  if (failed) return <div className={`h-full w-full bg-[#064B79] ${className}`} />;
   return (
     <img
       src={unsplash(id, w)}
@@ -113,13 +99,13 @@ export function HomePage() {
         faqs={HOME_FAQS}
       />
 
-      <main className="flex-1 bg-[#EEF2F1] text-[#0B1A1C]">
+      <main className="flex-1 bg-[#EEF5FA] text-[#102A43]">
         {/* HERO: full-bleed photo, headline bottom-left, stats docked at the base */}
-        <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-[#0E2A2D]">
+        <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-[#1F2937]">
           <div className="absolute inset-0 -z-10">
             <Photo id={IMAGES.hero} alt="CNC machine cutting a metal part" w={2000} priority />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D] via-[#0E2A2D]/70 to-[#0E2A2D]/25" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0E2A2D]/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1F2937] via-[#1F2937]/65 to-[#1F2937]/15" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1F2937]/70 via-[#1F2937]/10 to-transparent" />
           </div>
 
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-12 lg:pb-16">
@@ -129,7 +115,7 @@ export function HomePage() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="max-w-3xl"
             >
-              <p className="mb-5 text-sm font-medium text-[#D9A441]">
+              <p className="mb-5 text-sm font-medium text-[#E45532]">
                 Faridabad, Haryana. Machining since 2000.
               </p>
               <h1 className="font-display text-[42px] sm:text-6xl lg:text-7xl font-bold leading-[1.02] tracking-tight text-white">
@@ -142,7 +128,7 @@ export function HomePage() {
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link
                   to="/contact-us/"
-                  className="inline-flex items-center gap-2 rounded-md bg-[#D9A441] px-7 py-4 text-sm font-semibold text-[#0B1A1C] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E2A2D]"
+                  className="inline-flex items-center gap-2 rounded-md bg-[#E45532] px-7 py-4 text-sm font-semibold text-[#102A43] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#075B91]"
                 >
                   Request a quote
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -157,7 +143,7 @@ export function HomePage() {
             </motion.div>
           </div>
 
-          <div className="border-t border-white/15 bg-[#0E2A2D]/70 backdrop-blur-md">
+          <div className="border-t border-white/15 bg-[#1F2937]/85 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 lg:grid-cols-4">
               {COMPANY_HIGHLIGHTS.map((item, i) => (
                 <div
@@ -177,7 +163,7 @@ export function HomePage() {
                       <span>{item.metricLabel}</span>
                     )}
                   </p>
-                  <h2 className="mt-1 text-sm font-medium text-[#D9A441]">{item.title}</h2>
+                  <h2 className="mt-1 text-sm font-medium text-[#E45532]">{item.title}</h2>
                   <p className="mt-0.5 hidden sm:block text-xs text-white/65 leading-relaxed">
                     {item.subtitle}
                   </p>
@@ -188,18 +174,18 @@ export function HomePage() {
         </section>
 
         {/* ABOUT: company introduction immediately follows the hero */}
-        <section className="overflow-hidden bg-[#F7F8F5] py-20 lg:py-28">
+        <section className="overflow-hidden bg-[#F5F8FC] py-20 lg:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
               <RevealBlock className="lg:col-span-6">
-                <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#8A6414]">
-                  <span className="h-px w-8 bg-[#D9A441]" aria-hidden="true" />
+                <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#B5472A]">
+                  <span className="h-px w-8 bg-[#E45532]" aria-hidden="true" />
                   About J.D. Associates
                 </p>
                 <h2 className="max-w-xl font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
                   Precision manufacturing, built on partnership.
                 </h2>
-                <p className="mt-6 max-w-xl text-base leading-relaxed text-[#3D5255] sm:text-lg">
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-[#334E68] sm:text-lg">
                   Since May 2000, J.D. Associates has made drawing-led shafts and machined
                   components for automotive and engineering teams. From our Faridabad facility, we
                   combine CNC and VMC machining with a practical, collaborative approach to every
@@ -207,30 +193,30 @@ export function HomePage() {
                 </p>
                 <Link
                   to="/about-us/"
-                  className="mt-7 inline-flex items-center gap-2 rounded-md bg-[#0E2A2D] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#14393D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2"
+                  className="mt-7 inline-flex items-center gap-2 rounded-md bg-[#075B91] px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#064B79] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2"
                 >
                   Get to know us
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
 
-                <dl className="mt-10 grid grid-cols-3 border-t border-[#0B1A1C]/15 pt-5">
+                <dl className="mt-10 grid grid-cols-3 border-t border-[#102A43]/15 pt-5">
                   <div className="pr-3">
                     <dt className="font-display text-2xl font-bold tabular-nums sm:text-3xl">
                       2000
                     </dt>
-                    <dd className="mt-1 text-xs leading-relaxed text-[#3D5255] sm:text-sm">
+                    <dd className="mt-1 text-xs leading-relaxed text-[#334E68] sm:text-sm">
                       Established
                     </dd>
                   </div>
-                  <div className="border-l border-[#0B1A1C]/15 px-3 sm:px-5">
+                  <div className="border-l border-[#102A43]/15 px-3 sm:px-5">
                     <dt className="font-display text-2xl font-bold tabular-nums sm:text-3xl">5</dt>
-                    <dd className="mt-1 text-xs leading-relaxed text-[#3D5255] sm:text-sm">
+                    <dd className="mt-1 text-xs leading-relaxed text-[#334E68] sm:text-sm">
                       Machinable metals
                     </dd>
                   </div>
-                  <div className="border-l border-[#0B1A1C]/15 pl-3 sm:pl-5">
+                  <div className="border-l border-[#102A43]/15 pl-3 sm:pl-5">
                     <dt className="font-display text-xl font-bold sm:text-2xl">CNC + VMC</dt>
-                    <dd className="mt-1 text-xs leading-relaxed text-[#3D5255] sm:text-sm">
+                    <dd className="mt-1 text-xs leading-relaxed text-[#334E68] sm:text-sm">
                       Core capabilities
                     </dd>
                   </div>
@@ -239,16 +225,16 @@ export function HomePage() {
 
               <RevealBlock delay={0.08} className="lg:col-span-6">
                 <div className="relative mx-auto max-w-xl lg:ml-auto">
-                  <div className="absolute -right-4 -top-4 h-28 w-28 rounded-full border border-[#D9A441]/50 sm:-right-6 sm:-top-6 sm:h-36 sm:w-36" />
-                  <div className="relative isolate aspect-[4/3] overflow-hidden rounded-2xl bg-[#0E2A2D] shadow-2xl shadow-[#0E2A2D]/15">
+                  <div className="absolute -right-4 -top-4 h-28 w-28 rounded-full border border-[#E45532]/50 sm:-right-6 sm:-top-6 sm:h-36 sm:w-36" />
+                  <div className="relative isolate aspect-[4/3] overflow-hidden rounded-2xl bg-[#075B91] shadow-2xl shadow-[#075B91]/15">
                     <Photo
                       id={IMAGES.floor}
                       alt="CNC and VMC machines at the J.D. Associates manufacturing facility"
                       w={1600}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D]/90 via-transparent to-[#0E2A2D]/10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#075B91]/90 via-transparent to-[#075B91]/10" />
                     <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#D9A441]">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#E45532]">
                         Faridabad, Haryana
                       </p>
                       <p className="mt-2 max-w-sm font-display text-2xl font-bold leading-tight text-white sm:text-3xl">
@@ -256,9 +242,9 @@ export function HomePage() {
                       </p>
                     </div>
                   </div>
-                  <div className="absolute -bottom-5 right-4 rounded-lg border border-[#E5E7E1] bg-white px-5 py-4 shadow-xl sm:right-8">
-                    <p className="font-display text-2xl font-bold text-[#0E2A2D]">Since 2000</p>
-                    <p className="mt-1 text-xs font-medium text-[#64736F]">Manufacturing in Faridabad</p>
+                  <div className="absolute -bottom-5 right-4 rounded-lg border border-[#E2E8F0] bg-white px-5 py-4 shadow-xl sm:right-8">
+                    <p className="font-display text-2xl font-bold text-[#075B91]">Since 2000</p>
+                    <p className="mt-1 text-xs font-medium text-[#64748B]">Manufacturing in Faridabad</p>
                   </div>
                 </div>
               </RevealBlock>
@@ -267,7 +253,7 @@ export function HomePage() {
         </section>
 
         {/* PRODUCTS: bento mosaic, one hero tile and one wide tile */}
-        <section className="py-20 lg:py-28">
+        <section className="pb-8 pt-20 lg:pb-10 lg:pt-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10">
               <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight">
@@ -275,30 +261,31 @@ export function HomePage() {
               </h2>
               <Link
                 to="/products/"
-                className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#8A6414] transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-semibold hover:text-[#B5472A] transition-colors"
               >
                 Open the full catalogue
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[260px] gap-4">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:auto-rows-[250px] lg:grid-cols-4">
               {PRODUCT_CATEGORIES.map((category, i) => (
                 <Link
                   key={category.id}
                   to={`/products/?category=${category.id}`}
-                  className={`group relative isolate flex min-h-[280px] flex-col justify-end overflow-hidden rounded-xl bg-[#0E2A2D] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 ${
+                  className={`group relative isolate flex min-h-[260px] flex-col justify-end overflow-hidden rounded-xl bg-[#102A43] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2 lg:min-h-0 ${
                     bento ? BENTO_6[i] : ''
                   }`}
                 >
                   <div className="absolute inset-0 -z-10">
-                    <Photo
-                      id={productPhoto(category.title)}
-                      alt={category.title}
-                      w={1200}
-                      className="transition-transform duration-700 group-hover:scale-105"
+                    <ProductImage
+                      categoryId={category.id}
+                      slug={category.slug}
+                      name={category.image.alt}
+                      width={1200}
+                      className="!aspect-auto h-full w-full transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D] via-[#0E2A2D]/55 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#102A43]/90 via-[#102A43]/45 to-[#102A43]/10" />
                   </div>
                   <div className="p-6">
                     <h3
@@ -315,7 +302,7 @@ export function HomePage() {
                     >
                       {category.shortDescription}
                     </p>
-                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#D9A441]">
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#E45532]">
                       View range
                       <ArrowRight
                         className="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -329,35 +316,59 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* CAPABILITIES: photo with machine brands as a type-led list */}
-        <section className="pb-20 lg:pb-28">
+        {/* CAPABILITIES: manufacturing-floor photo and equipment overview */}
+        <section className="bg-[#F5F7F9] pb-20 pt-8 lg:pb-28 lg:pt-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
-              <div className="lg:col-span-7 relative min-h-[340px] overflow-hidden rounded-xl bg-[#0E2A2D]">
+            <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
+              <div className="group relative min-h-[360px] overflow-hidden rounded-3xl bg-[#102A43] shadow-sm lg:col-span-7 lg:min-h-[520px]">
                 <div className="absolute inset-0">
-                  <Photo id={IMAGES.floor} alt="CNC and VMC machines on the shop floor" w={1600} />
+                  <Photo
+                    id={IMAGES.floor}
+                    alt="CNC and VMC machines on the shop floor"
+                    w={1600}
+                    className="transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0E2A2D]/90 to-transparent p-6 pt-20">
-                  <p className="text-sm text-white/80">
-                    <span className="font-semibold text-[#D9A441]">Metals: </span>
-                    {COMPANY_FACTS.materials.join(', ')}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#102A43]/85 via-[#102A43]/10 to-transparent" />
+                <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-semibold text-[#102A43] shadow-sm sm:left-8 sm:top-8">
+                  <span className="h-2 w-2 rounded-full bg-[#E45532]" aria-hidden="true" />
+                  Manufacturing floor
+                </span>
+                <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/80">
+                    Materials we machine
                   </p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {COMPANY_FACTS.materials.map((material) => (
+                      <li
+                        key={material}
+                        className="rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+                      >
+                        {material}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 flex flex-col justify-center">
-                <h2 className="font-display text-3xl lg:text-5xl font-bold tracking-tight">
+              <div className="flex flex-col justify-center rounded-3xl border border-[#E2E8F0] bg-white p-6 shadow-sm sm:p-8 lg:col-span-5 lg:p-10">
+                <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-[#B5472A]">
+                  <span className="h-px w-7 bg-[#E45532]" aria-hidden="true" />
+                  Precision equipment
+                </p>
+                <h2 className="mt-4 font-display text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
                   CNC and VMC machining, run to your drawing
                 </h2>
-                <p className="mt-4 text-[#3D5255] leading-relaxed">
-                  One floor in Faridabad handles shafts, gears, cams and custom parts, on machines
-                  from established makers.
+                <p className="mt-4 leading-relaxed text-[#334E68]">
+                  One Faridabad facility brings shafts, gears, cams and custom parts together with
+                  dependable CNC and VMC equipment.
                 </p>
-                <dl className="mt-8 divide-y divide-[#0B1A1C]/12 border-y border-[#0B1A1C]/12">
+
+                <dl className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {COMPANY_FACTS.machineryBrands.map((machine) => (
-                    <div key={machine.brand} className="flex items-baseline gap-5 py-4">
-                      <dt className="w-24 shrink-0 font-display text-2xl font-bold">{machine.brand}</dt>
-                      <dd className="text-sm text-[#3D5255] leading-relaxed">{machine.role}</dd>
+                    <div key={machine.brand} className="rounded-xl bg-[#F5F7F9] p-4 ring-1 ring-[#102A43]/5">
+                      <dt className="font-display text-lg font-bold text-[#075B91]">{machine.brand}</dt>
+                      <dd className="mt-1.5 text-xs leading-relaxed text-[#475569]">{machine.role}</dd>
                     </div>
                   ))}
                 </dl>
@@ -367,7 +378,7 @@ export function HomePage() {
         </section>
 
         {/* WHY: dark band, heading on top, bento of six reasons (photo card and blue card) */}
-        <section className="bg-[#0E2A2D] py-20 lg:py-28 text-white">
+        <section className="bg-[#1D5F83] py-20 lg:py-28 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <h2 className="max-w-2xl font-display text-4xl font-bold leading-[1.05] tracking-tight lg:text-6xl">
@@ -378,7 +389,7 @@ export function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:auto-rows-[260px] lg:grid-cols-4">
               {WHY_CHOOSE_ITEMS.map((item, idx) => {
                 const Icon = WHY_ICONS[idx % WHY_ICONS.length];
                 const six = WHY_CHOOSE_ITEMS.length === 6;
@@ -389,28 +400,28 @@ export function HomePage() {
                   <RevealBlock
                     key={item.title}
                     delay={idx * 0.04}
-                    className={`group relative isolate flex min-h-[250px] flex-col justify-between overflow-hidden rounded-2xl p-7 sm:p-8 ${
+                    className={`group relative isolate flex min-h-[260px] flex-col justify-between overflow-hidden rounded-2xl p-7 sm:p-8 ${
                       wide ? 'md:col-span-2' : ''
                     } ${
                       blueCard
-                        ? 'bg-[#1F5FFF] text-white'
+                        ? 'bg-[#287EB3] text-white'
                         : 'bg-white/[0.05] ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.09]'
                     }`}
                   >
                     {photoCard && (
                       <div className="absolute inset-0 -z-10">
                         <Photo id={IMAGES.hero} w={1400} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D] via-[#0E2A2D]/70 to-[#1F5FFF]/25" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#102A43]/90 via-[#102A43]/55 to-[#102A43]/15" />
                       </div>
                     )}
 
                     <span
                       className={`flex h-12 w-12 items-center justify-center rounded-full ${
-                        blueCard ? 'bg-white/15' : 'bg-[#4C8DFF]/15'
+                        blueCard ? 'bg-white/15' : 'bg-[#287EB3]/15'
                       }`}
                     >
                       <Icon
-                        className={`h-6 w-6 ${blueCard ? 'text-white' : 'text-[#6FA3FF]'}`}
+                        className={`h-6 w-6 ${blueCard ? 'text-white' : 'text-[#7DB8D8]'}`}
                         aria-hidden="true"
                       />
                     </span>
@@ -439,11 +450,11 @@ export function HomePage() {
         </section>
 
         {/* INDUSTRIES: image-led selector with a numbered list of applications */}
-        <section className="bg-[#F8F9F8] py-20 lg:py-28" aria-labelledby="industries-heading">
+        <section className="bg-[#F8FAFC] py-20 lg:py-28" aria-labelledby="industries-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-9 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#8A6414]">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#B5472A]">
                   Applications
                 </p>
                 <h2
@@ -455,7 +466,7 @@ export function HomePage() {
               </div>
               <Link
                 to="/industries/"
-                className="inline-flex w-fit items-center gap-2 text-sm font-semibold transition-colors hover:text-[#155EEF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] focus-visible:ring-offset-4"
+                className="inline-flex w-fit items-center gap-2 text-sm font-semibold transition-colors hover:text-[#0869A8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0869A8] focus-visible:ring-offset-4"
               >
                 See all applications
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -471,14 +482,14 @@ export function HomePage() {
                       initial={reduced ? false : { opacity: 0.7 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.35 }}
-                      className="relative isolate aspect-[5/4] overflow-hidden rounded-2xl bg-[#0E2A2D] shadow-xl shadow-[#0E2A2D]/15"
+                      className="relative isolate aspect-[5/4] overflow-hidden rounded-2xl bg-[#075B91] shadow-xl shadow-[#075B91]/15"
                     >
                       <Photo
                         id={IMAGES.industries[i % IMAGES.industries.length]}
                         w={1600}
                         className="absolute inset-0 transition-transform duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0E2A2D]/90 via-[#0E2A2D]/5 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#075B91]/90 via-[#075B91]/5 to-transparent" />
                       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
                         <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base">
                           {industry.description}
@@ -495,11 +506,11 @@ export function HomePage() {
                       onClick={() => setActiveIndustry(i)}
                       aria-label={`Show ${industry.title}`}
                       aria-pressed={i === activeIndustry}
-                      className="flex h-6 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] focus-visible:ring-offset-2"
+                      className="flex h-6 items-center justify-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0869A8] focus-visible:ring-offset-2"
                     >
                       <span
                         className={`h-1.5 rounded-full transition-all ${
-                          i === activeIndustry ? 'w-7 bg-[#155EEF]' : 'w-1.5 bg-[#CBD2D1]'
+                          i === activeIndustry ? 'w-7 bg-[#0869A8]' : 'w-1.5 bg-[#CBD5E1]'
                         }`}
                       />
                     </button>
@@ -507,22 +518,22 @@ export function HomePage() {
                 </div>
               </div>
 
-              <ol className="border-t border-[#0B1A1C]/15">
+              <ol className="border-t border-[#102A43]/15">
                 {INDUSTRIES_LIST.map((industry, i) => {
                   const active = i === activeIndustry;
                   const confirmed = industry.verificationStatus === 'confirmed';
 
                   return (
-                    <li key={industry.id} className="border-b border-[#0B1A1C]/15">
+                    <li key={industry.id} className="border-b border-[#102A43]/15">
                       <button
                         type="button"
                         onClick={() => setActiveIndustry(i)}
                         aria-pressed={active}
-                        className="group grid w-full grid-cols-[2rem_minmax(0,1fr)_2.5rem] items-start gap-3 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#155EEF] sm:grid-cols-[2rem_minmax(0,1fr)_2.75rem] sm:gap-4 sm:py-6"
+                        className="group grid w-full grid-cols-[2rem_minmax(0,1fr)_2.5rem] items-start gap-3 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0869A8] sm:grid-cols-[2rem_minmax(0,1fr)_2.75rem] sm:gap-4 sm:py-6"
                       >
                         <span
                           className={`pt-1 font-mono text-xs tabular-nums transition-colors ${
-                            active ? 'text-[#155EEF]' : 'text-[#A4AEAD]'
+                            active ? 'text-[#0869A8]' : 'text-[#94A3B8]'
                           }`}
                         >
                           {String(i + 1).padStart(2, '0')}
@@ -530,7 +541,7 @@ export function HomePage() {
                         <span className="min-w-0">
                           <span
                             className={`block font-display text-lg font-bold leading-snug transition-colors sm:text-xl ${
-                              active ? 'text-[#155EEF]' : 'text-[#0B1A1C] group-hover:text-[#155EEF]'
+                              active ? 'text-[#0869A8]' : 'text-[#102A43] group-hover:text-[#0869A8]'
                             }`}
                           >
                             {industry.title}
@@ -539,7 +550,7 @@ export function HomePage() {
                             <span className="mt-2 block">
                               <span
                                 className={`mb-2 inline-flex items-center gap-1.5 text-[11px] font-semibold ${
-                                  confirmed ? 'text-[#8A6414]' : 'text-[#64736F]'
+                                  confirmed ? 'text-[#B5472A]' : 'text-[#64748B]'
                                 }`}
                               >
                                 {confirmed ? (
@@ -549,7 +560,7 @@ export function HomePage() {
                                 )}
                                 {industry.verificationLabel}
                               </span>
-                              <span className="block text-sm leading-relaxed text-[#74817F]">
+                              <span className="block text-sm leading-relaxed text-[#64748B]">
                                 {industry.description}
                               </span>
                             </span>
@@ -558,8 +569,8 @@ export function HomePage() {
                         <span
                           className={`mt-0.5 flex h-8 w-8 items-center justify-center rounded-full transition-all sm:h-9 sm:w-9 ${
                             active
-                              ? 'bg-[#155EEF] text-white'
-                              : 'text-[#526568] group-hover:bg-[#155EEF]/10 group-hover:text-[#155EEF]'
+                              ? 'bg-[#0869A8] text-white'
+                              : 'text-[#475569] group-hover:bg-[#0869A8]/10 group-hover:text-[#0869A8]'
                           }`}
                         >
                           {active ? (
@@ -585,12 +596,12 @@ export function HomePage() {
                 <h2 className="font-display text-3xl lg:text-4xl font-bold tracking-tight">
                   Questions buyers ask
                 </h2>
-                <p className="mt-3 text-[#3D5255] leading-relaxed">
+                <p className="mt-3 text-[#334E68] leading-relaxed">
                   Not here? Send us your drawing and we will answer directly.
                 </p>
                 <Link
                   to="/contact-us/"
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold hover:text-[#8A6414] transition-colors"
+                  className="mt-6 inline-flex items-center gap-2 text-sm font-semibold hover:text-[#B5472A] transition-colors"
                 >
                   Contact our team
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -603,18 +614,14 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* FINAL CTA: full-bleed photo */}
-        <section className="relative isolate overflow-hidden bg-[#0E2A2D] py-24 lg:py-32">
-          <div className="absolute inset-0 -z-10">
-            <Photo id={IMAGES.cta} w={2000} />
-            <div className="absolute inset-0 bg-[#0E2A2D]/80" />
-          </div>
+        {/* FINAL CTA */}
+        <section className="overflow-hidden bg-white py-24 lg:py-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row lg:items-end justify-between gap-10">
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight text-white">
+              <h2 className="font-display text-4xl lg:text-6xl font-bold tracking-tight text-[#102A43]">
                 Have a drawing? Get a quote.
               </h2>
-              <p className="mt-4 text-white/75 leading-relaxed">
+              <p className="mt-4 text-[#334E68] leading-relaxed">
                 Send the part drawing, material grade and yearly volume. Our Faridabad team will
                 reply with a quote. Customer names appear on this site only with written
                 permission.
@@ -623,14 +630,14 @@ export function HomePage() {
             <div className="flex flex-wrap gap-3 shrink-0">
               <Link
                 to="/contact-us/"
-                className="inline-flex items-center gap-2 rounded-md bg-[#D9A441] px-7 py-4 text-sm font-semibold text-[#0B1A1C] transition-colors hover:bg-white"
+                className="inline-flex items-center gap-2 rounded-md bg-[#E45532] px-7 py-4 text-sm font-semibold text-[#102A43] transition-colors hover:bg-white"
               >
                 Request a quote
                 <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/contact-us/"
-                className="inline-flex items-center rounded-md border border-white/35 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                className="inline-flex items-center rounded-md border border-[#CBD5E1] px-7 py-4 text-sm font-semibold text-[#102A43] transition-colors hover:bg-[#F5F8FC]"
               >
                 Contact our team
               </Link>

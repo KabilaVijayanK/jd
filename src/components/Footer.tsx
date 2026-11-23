@@ -2,13 +2,12 @@ import { Link } from 'react-router-dom';
 import { ArrowUp, ArrowUpRight, MapPin, Phone, Mail, MessageSquare } from 'lucide-react';
 import { COMPANY_FACTS, INDUSTRIES_LIST, PRODUCT_CATEGORIES } from '../data/companyData';
 
-/* Footer: dark teal, quote call-to-action on top, four link columns,
-   contact details, legal row. Palette: teal #0E2A2D, brass #D9A441, ink #0B1A1C */
+/* Footer: blue background, orange quote call-to-action, link columns, and contact details. */
 
 const linkClass =
-  'inline-block rounded text-sm text-white/65 transition-colors hover:text-[#D9A441] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E2A2D]';
+  'inline-block rounded text-sm text-white/65 transition-colors hover:text-[#E45532] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2 focus-visible:ring-offset-[#075B91]';
 
-const headingClass = 'text-xs font-semibold uppercase tracking-wider text-[#D9A441]';
+const headingClass = 'text-xs font-semibold uppercase tracking-wider text-[#E45532]';
 
 export function Footer() {
   const quickLinks = [
@@ -26,7 +25,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="relative overflow-hidden bg-[#0E2A2D] text-white">
+    <footer className="relative overflow-hidden bg-[#075B91] text-white">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.05]"
@@ -42,7 +41,7 @@ export function Footer() {
         <div className="flex flex-col justify-between gap-6 border-b border-white/10 py-12 lg:flex-row lg:items-center lg:py-14">
           <div className="max-w-2xl">
             <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-              Have a drawing? <span className="text-[#D9A441]">Let&apos;s quote it.</span>
+              Have a drawing? <span className="text-[#E45532]">Let&apos;s quote it.</span>
             </h2>
             <p className="mt-3 text-base leading-relaxed text-white/65">
               Send your 2D or 3D drawing for a feasibility review and an accurate CNC/VMC quote.
@@ -50,7 +49,7 @@ export function Footer() {
           </div>
           <Link
             to="/contact-us/"
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#D9A441] px-7 py-4 text-sm font-semibold text-[#0B1A1C] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E2A2D]"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#E45532] px-7 py-4 text-sm font-semibold text-[#102A43] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#075B91]"
           >
             Request a quote
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -63,14 +62,13 @@ export function Footer() {
           <div className="space-y-5 lg:col-span-4">
             <Link
               to="/"
-              className="inline-flex items-center gap-3 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0E2A2D]"
+              className="inline-flex items-center gap-3 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2 focus-visible:ring-offset-[#075B91]"
             >
-              <svg width="32" height="32" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <rect width="28" height="28" rx="6" fill="#D9A441" />
-                <circle cx="14" cy="14" r="6.5" stroke="#0E2A2D" strokeWidth="1.75" />
-                <circle cx="14" cy="14" r="2.25" fill="#0E2A2D" />
-              </svg>
-              <span className="font-display text-xl font-bold">{COMPANY_FACTS.name}</span>
+              <img
+                src="/logo.png"
+                alt="J.D. Associates"
+                className="h-16 w-auto rounded-md bg-white p-1"
+              />
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-white/65">
               Precision shafts, EV rear axle shafts, cardan shafts, connecting rods, cams, gears, and custom CNC/VMC
@@ -120,12 +118,12 @@ export function Footer() {
             <h3 className={headingClass}>Contact</h3>
             <ul className="mt-5 space-y-4 text-sm">
               <li className="flex items-start gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#D9A441]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#E45532]">
                   <MapPin className="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span className="leading-relaxed text-white/80">
                   {COMPANY_FACTS.address.line}{' '}
-                  <span className="text-[#D9A441]">({COMPANY_FACTS.address.statusLabel})</span>
+                  <span className="text-[#E45532]">({COMPANY_FACTS.address.statusLabel})</span>
                 </span>
               </li>
               {contactRows.map((row) => (
@@ -147,16 +145,16 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 py-6 text-xs text-white/50 sm:flex-row sm:items-center">
           <p>Copyright © 2026 {COMPANY_FACTS.name}. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <Link to="/privacy-policy/" className="rounded transition-colors hover:text-[#D9A441]">
+            <Link to="/privacy-policy/" className="rounded transition-colors hover:text-[#E45532]">
               Privacy Policy
             </Link>
-            <Link to="/terms-and-conditions/" className="rounded transition-colors hover:text-[#D9A441]">
+            <Link to="/terms-and-conditions/" className="rounded transition-colors hover:text-[#E45532]">
               Terms and Conditions
             </Link>
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 font-semibold text-white/80 transition-colors hover:border-[#D9A441] hover:text-[#D9A441] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3 py-1.5 font-semibold text-white/80 transition-colors hover:border-[#E45532] hover:text-[#E45532] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532]"
             >
               Back to top
               <ArrowUp className="h-3.5 w-3.5" aria-hidden="true" />

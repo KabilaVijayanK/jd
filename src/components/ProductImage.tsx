@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ProductSchematicPlate } from './EngineeringPlates';
 import { getProductImage } from '../data/productImages';
+import { PRODUCT_CATEGORIES } from '../data/companyData';
 
 type ProductImageProps = {
   categoryId: string;
@@ -13,14 +14,15 @@ type ProductImageProps = {
 
 export function ProductImage({ categoryId, slug, name, width = 900, eager = false, className = '' }: ProductImageProps) {
   const [failed, setFailed] = useState(false);
+  const categoryImage = PRODUCT_CATEGORIES.find((category) => category.id === categoryId)?.image;
 
   // If the photo can't load, fall back to the old schematic so the card is never empty.
-  if (failed) return <ProductSchematicPlate categoryId={categoryId} />;
+  if (failed) return <ProductSchematicPlate categoryId={categoryId} className={className} />;
 
   return (
     <img
-      src={getProductImage(categoryId, slug, width)}
-      alt={name}
+      src={categoryImage?.url ?? getProductImage(categoryId, slug, width)}
+      alt={categoryImage?.alt ?? name}
       loading={eager ? 'eager' : 'lazy'}
       decoding="async"
       onError={() => setFailed(true)}

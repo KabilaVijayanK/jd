@@ -69,7 +69,7 @@ export function ProductsPage() {
   ];
 
   const ring =
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F7F6]';
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F2F7FB]';
 
   return (
     <PageShell>
@@ -80,7 +80,7 @@ export function ProductsPage() {
         breadcrumbs={breadcrumbs}
       />
 
-      <main className="flex-1 bg-[#F4F7F6] pt-24 text-[#0B1A1C] lg:pt-28">
+      <main className="flex-1 bg-[#F2F7FB] pt-24 text-[#102A43] lg:pt-28">
         <div className="mx-auto max-w-7xl px-4 pb-20 pt-6 sm:px-6 lg:px-8">
           <Breadcrumbs items={breadcrumbs} />
 
@@ -91,7 +91,7 @@ export function ProductsPage() {
                 <h2 className="mb-3 hidden px-2 font-display text-lg font-bold lg:block">Categories</h2>
                 <nav
                   aria-label="Product categories"
-                  className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:max-h-[calc(100vh-9rem)] lg:flex-col lg:gap-1 lg:overflow-y-auto lg:rounded-2xl lg:border lg:border-[#0B1A1C]/10 lg:bg-white lg:p-2 lg:pb-2"
+                  className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6 lg:mx-0 lg:max-h-[calc(100vh-9rem)] lg:flex-col lg:gap-1 lg:overflow-y-auto lg:rounded-2xl lg:border lg:border-[#102A43]/10 lg:bg-white lg:p-2 lg:pb-2"
                 >
                   {sidebar.map((item) => {
                     const active = selectedCategory === item.id;
@@ -103,13 +103,13 @@ export function ProductsPage() {
                         aria-current={active ? 'true' : undefined}
                         className={`flex shrink-0 items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left text-sm transition-colors lg:w-full lg:border-transparent lg:py-3 ${ring} ${
                           active
-                            ? 'border-[#0E2A2D] bg-[#0E2A2D] text-white shadow-md'
-                            : 'border-[#0B1A1C]/10 bg-white text-[#3D5255] hover:bg-[#EEF2F1] hover:text-[#0B1A1C] lg:bg-transparent'
+                            ? 'border-[#075B91] bg-[#075B91] text-white shadow-md'
+                            : 'border-[#102A43]/10 bg-white text-[#334E68] hover:bg-[#EEF5FA] hover:text-[#102A43] lg:bg-transparent'
                         }`}
                       >
                         <span
                           className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold ${
-                            active ? 'bg-white/15 text-[#D9A441]' : 'bg-[#EEF2F1] text-[#8A6414]'
+                            active ? 'bg-white/15 text-[#E45532]' : 'bg-[#EEF5FA] text-[#B5472A]'
                           }`}
                         >
                           {item.code || <LayoutGrid className="h-3.5 w-3.5" aria-hidden="true" />}
@@ -119,7 +119,7 @@ export function ProductsPage() {
                         </span>
                         <span
                           className={`rounded-full px-2 py-0.5 text-xs tabular-nums ${
-                            active ? 'bg-white/15 text-white' : 'bg-[#EEF2F1] text-[#64736F]'
+                            active ? 'bg-white/15 text-white' : 'bg-[#EEF5FA] text-[#64748B]'
                           }`}
                         >
                           {item.count}
@@ -134,10 +134,10 @@ export function ProductsPage() {
             {/* CONTENT */}
             <section className="lg:col-span-9" aria-label="Products">
               {/* Toolbar */}
-              <div className="flex flex-col gap-4 border-b border-[#0B1A1C]/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+              <div className="flex flex-col gap-4 border-b border-[#102A43]/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">{heading}</h1>
-                  <p className="mt-1 text-sm text-[#64736F]">
+                  <p className="mt-1 text-sm text-[#64748B]">
                     {filtered.length} of {ALL_PRODUCTS.length} products
                   </p>
                 </div>
@@ -145,7 +145,7 @@ export function ProductsPage() {
                 <div className="flex items-center gap-3">
                   <div className="relative w-full sm:w-64">
                     <Search
-                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64736F]"
+                      className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
                       aria-hidden="true"
                     />
                     <input
@@ -154,27 +154,27 @@ export function ProductsPage() {
                       onChange={(e) => update({ q: e.target.value, page: null })}
                       placeholder="Search by name or type"
                       aria-label="Search products"
-                      className={`h-11 w-full rounded-xl border border-[#0B1A1C]/15 bg-white pl-10 pr-9 text-sm placeholder:text-[#64736F] ${ring}`}
+                      className={`h-11 w-full rounded-xl border border-[#102A43]/15 bg-white pl-10 pr-9 text-sm placeholder:text-[#64748B] ${ring}`}
                     />
                     {query && (
                       <button
                         type="button"
                         onClick={() => update({ q: null, page: null })}
                         aria-label="Clear search"
-                        className={`absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#64736F] hover:bg-[#EEF2F1] ${ring}`}
+                        className={`absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#64748B] hover:bg-[#EEF5FA] ${ring}`}
                       >
                         <X className="h-3.5 w-3.5" />
                       </button>
                     )}
                   </div>
 
-                  <label className="flex shrink-0 items-center gap-2 text-sm text-[#64736F]">
+                  <label className="flex shrink-0 items-center gap-2 text-sm text-[#64748B]">
                     Show
                     <span className="relative">
                       <select
                         value={perPage}
                         onChange={(e) => update({ per: e.target.value === '9' ? null : e.target.value, page: null })}
-                        className={`h-11 appearance-none rounded-xl border border-[#0B1A1C]/15 bg-white pl-3.5 pr-9 text-sm font-semibold text-[#0B1A1C] ${ring}`}
+                        className={`h-11 appearance-none rounded-xl border border-[#102A43]/15 bg-white pl-3.5 pr-9 text-sm font-semibold text-[#102A43] ${ring}`}
                       >
                         {PAGE_SIZES.map((n) => (
                           <option key={n} value={n}>
@@ -183,7 +183,7 @@ export function ProductsPage() {
                         ))}
                       </select>
                       <ChevronDown
-                        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64736F]"
+                        className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
                         aria-hidden="true"
                       />
                     </span>
@@ -198,9 +198,9 @@ export function ProductsPage() {
                     <li key={`${product.category.id}-${product.slug}`}>
                       <Link
                         to={productPath(product)}
-                        className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-[#0B1A1C]/10 bg-white transition-all hover:-translate-y-1 hover:border-[#0E2A2D]/40 hover:shadow-[0_16px_36px_-18px_rgba(14,42,45,0.4)] ${ring}`}
+                        className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-[#102A43]/10 bg-white transition-all hover:-translate-y-1 hover:border-[#075B91]/40 hover:shadow-[0_16px_36px_-18px_rgba(7,91,145,0.4)] ${ring}`}
                       >
-                        <div className="overflow-hidden border-b border-[#0B1A1C]/10 bg-[#F4F7F6]">
+                        <div className="overflow-hidden border-b border-[#102A43]/10 bg-[#F2F7FB]">
                           <ProductImage
                             categoryId={product.category.id}
                             slug={product.slug}
@@ -211,22 +211,22 @@ export function ProductsPage() {
                         </div>
                         <div className="flex flex-1 flex-col p-5">
                           <div className="flex items-start gap-3">
-                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EEF2F1] text-xs font-bold text-[#8A6414]">
+                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EEF5FA] text-xs font-bold text-[#B5472A]">
                               {product.category.code}
                             </span>
-                            <h3 className="font-display text-base font-bold leading-snug group-hover:text-[#14393D]">
+                            <h3 className="font-display text-base font-bold leading-snug group-hover:text-[#064B79]">
                               {product.name}
                             </h3>
                           </div>
-                          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-relaxed text-[#64736F]">
+                          <p className="mt-3 line-clamp-2 flex-1 text-sm leading-relaxed text-[#64748B]">
                             {product.note}
                           </p>
                           <div className="mt-4 flex items-center justify-between gap-2">
-                            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#0B1A1C]/12 bg-[#F4F7F6] px-2.5 py-1 text-xs font-semibold text-[#3D5255]">
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#102A43]/12 bg-[#F2F7FB] px-2.5 py-1 text-xs font-semibold text-[#334E68]">
                               <Tag className="h-3 w-3" aria-hidden="true" />
                               {product.category.code}
                             </span>
-                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#0E2A2D] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#075B91] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                               View details
                               <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                             </span>
@@ -237,13 +237,13 @@ export function ProductsPage() {
                   ))}
                 </ul>
               ) : (
-                <div className="mt-6 rounded-2xl border border-dashed border-[#0B1A1C]/20 bg-white px-6 py-16 text-center">
+                <div className="mt-6 rounded-2xl border border-dashed border-[#102A43]/20 bg-white px-6 py-16 text-center">
                   <p className="font-display text-lg font-bold">No products match your search</p>
-                  <p className="mt-1 text-sm text-[#64736F]">Try a different keyword or clear the filters.</p>
+                  <p className="mt-1 text-sm text-[#64748B]">Try a different keyword or clear the filters.</p>
                   <button
                     type="button"
                     onClick={() => setParams({})}
-                    className={`mt-5 rounded-lg bg-[#0E2A2D] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#14393D] ${ring}`}
+                    className={`mt-5 rounded-lg bg-[#075B91] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#064B79] ${ring}`}
                   >
                     Reset filters
                   </button>
@@ -258,7 +258,7 @@ export function ProductsPage() {
                     disabled={currentPage === 1}
                     onClick={() => update({ page: currentPage - 1 === 1 ? null : String(currentPage - 1) })}
                     aria-label="Previous page"
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg border border-[#0B1A1C]/15 bg-white disabled:opacity-40 ${ring}`}
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg border border-[#102A43]/15 bg-white disabled:opacity-40 ${ring}`}
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </button>
@@ -270,8 +270,8 @@ export function ProductsPage() {
                       aria-current={n === currentPage ? 'page' : undefined}
                       className={`h-10 min-w-10 rounded-lg border px-3 text-sm font-semibold tabular-nums ${ring} ${
                         n === currentPage
-                          ? 'border-[#0E2A2D] bg-[#0E2A2D] text-white'
-                          : 'border-[#0B1A1C]/15 bg-white text-[#3D5255] hover:bg-[#EEF2F1]'
+                          ? 'border-[#075B91] bg-[#075B91] text-white'
+                          : 'border-[#102A43]/15 bg-white text-[#334E68] hover:bg-[#EEF5FA]'
                       }`}
                     >
                       {n}
@@ -282,7 +282,7 @@ export function ProductsPage() {
                     disabled={currentPage === totalPages}
                     onClick={() => update({ page: String(currentPage + 1) })}
                     aria-label="Next page"
-                    className={`flex h-10 w-10 items-center justify-center rounded-lg border border-[#0B1A1C]/15 bg-white disabled:opacity-40 ${ring}`}
+                    className={`flex h-10 w-10 items-center justify-center rounded-lg border border-[#102A43]/15 bg-white disabled:opacity-40 ${ring}`}
                   >
                     <ChevronRight className="h-4 w-4" />
                   </button>
@@ -290,7 +290,7 @@ export function ProductsPage() {
               )}
 
               {/* Not listed */}
-              <div className="mt-10 flex flex-col justify-between gap-5 rounded-2xl bg-[#0E2A2D] p-7 text-white sm:flex-row sm:items-center">
+              <div className="mt-10 flex flex-col justify-between gap-5 rounded-2xl bg-[#075B91] p-7 text-white sm:flex-row sm:items-center">
                 <div>
                   <h2 className="font-display text-xl font-bold">Part not listed?</h2>
                   <p className="mt-1.5 max-w-md text-sm text-white/75">
@@ -299,7 +299,7 @@ export function ProductsPage() {
                 </div>
                 <Link
                   to="/contact-us/"
-                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#D9A441] px-6 py-3 text-sm font-semibold text-[#0B1A1C] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#E45532] px-6 py-3 text-sm font-semibold text-[#102A43] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
                   Send your drawing
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

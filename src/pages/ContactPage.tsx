@@ -25,7 +25,7 @@ import { COMPANY_FACTS, PRODUCT_CATEGORIES } from '../data/companyData';
 
 /* Contact page: dark info panel (left) + clean enquiry form card (right).
    Form logic, validation, file upload and the /api/enquiry call are unchanged.
-   Palette: teal #0E2A2D, teal-2 #14393D, brass #D9A441, mist #EEF2F1, ink #0B1A1C */
+   Palette: blue #075B91, blue-2 #064B79, orange #E45532, mist #EEF5FA, ink #102A43 */
 
 interface EnquiryFormValues {
   fullName: string;
@@ -44,8 +44,8 @@ interface SubmissionSuccess {
 }
 
 const inputBase =
-  'w-full rounded-lg border bg-white px-4 py-3 text-sm text-[#0B1A1C] placeholder:text-[#8A9794] transition-colors focus:outline-none focus:ring-2 focus:ring-[#D9A441]/60 focus:border-[#0E2A2D]';
-const inputOk = 'border-[#0B1A1C]/15 hover:border-[#0B1A1C]/30';
+  'w-full rounded-lg border bg-white px-4 py-3 text-sm text-[#102A43] placeholder:text-[#94A3B8] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E45532]/60 focus:border-[#075B91]';
+const inputOk = 'border-[#102A43]/15 hover:border-[#102A43]/30';
 const inputBad = 'border-red-400';
 
 function Field({
@@ -61,7 +61,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-[#0B1A1C]">
+      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-[#102A43]">
         {label}
       </label>
       {children}
@@ -190,7 +190,7 @@ export function ContactPage() {
   ];
 
   const ring =
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D9A441] focus-visible:ring-offset-2 focus-visible:ring-offset-white';
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
   return (
     <PageShell>
@@ -201,19 +201,19 @@ export function ContactPage() {
         breadcrumbs={breadcrumbs}
       />
 
-      <main className="flex-1 bg-[#EEF2F1] pt-24 text-[#0B1A1C] lg:pt-28">
+      <main className="flex-1 bg-[#EEF5FA] pt-24 text-[#102A43] lg:pt-28">
         <div className="mx-auto max-w-7xl px-4 pb-20 pt-6 sm:px-6 lg:px-8 lg:pb-28">
           <Breadcrumbs items={breadcrumbs} />
 
           {/* HEADER */}
           <header className="mt-8 max-w-3xl">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#8A6414]">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#B5472A]">
               OEM procurement &amp; technical enquiries
             </p>
             <h1 className="mt-3 font-display text-4xl font-bold leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">
               Let&apos;s quote your part.
             </h1>
-            <p className="mt-5 text-base leading-relaxed text-[#3D5255] sm:text-lg">
+            <p className="mt-5 text-base leading-relaxed text-[#334E68] sm:text-lg">
               Share your component specification, estimated batch volume and, if you have one, the engineering
               drawing. We review it and come back with a quote.
             </p>
@@ -222,32 +222,32 @@ export function ContactPage() {
           <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
             {/* INFO PANEL */}
             <aside className="lg:col-span-5">
-              <div className="relative overflow-hidden rounded-2xl bg-[#0E2A2D] p-7 text-white sm:p-9 lg:sticky lg:top-28">
+              <div className="relative overflow-hidden rounded-2xl bg-[#075B91] p-7 text-white sm:p-9 lg:sticky lg:top-28">
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full border border-[#D9A441]/25"
+                  className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full border border-[#E45532]/25"
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full border border-[#D9A441]/25"
+                  className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full border border-[#E45532]/25"
                 />
 
                 <div className="relative">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[#D9A441]">Manufacturer</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-white">Manufacturer</p>
                   <h2 className="mt-2 font-display text-2xl font-bold">{COMPANY_FACTS.name}</h2>
-                  <p className="mt-1 text-sm text-white/60">
+                  <p className="mt-1 text-sm text-white">
                     {COMPANY_FACTS.legalStatus} · Established {COMPANY_FACTS.established}
                   </p>
 
-                  <dl className="mt-7 divide-y divide-white/10 border-y border-white/10">
+                  <dl className="mt-7 divide-y divide-white/20 border-y border-white/20">
                     <div className="flex items-start gap-4 py-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#D9A441]">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#E45532]">
                         <MapPin className="h-5 w-5" aria-hidden="true" />
                       </span>
                       <div>
-                        <dt className="text-xs font-semibold uppercase tracking-wider text-white/50">Facility</dt>
-                        <dd className="mt-1 text-sm leading-relaxed text-white/90">{COMPANY_FACTS.address.line}</dd>
-                        <dd className="mt-1 text-xs font-medium text-[#D9A441]">
+                        <dt className="text-xs font-semibold uppercase tracking-wider text-white">Facility</dt>
+                        <dd className="mt-1 text-sm leading-relaxed text-white">{COMPANY_FACTS.address.line}</dd>
+                        <dd className="mt-1 text-xs font-semibold text-white">
                           ({COMPANY_FACTS.address.statusLabel})
                         </dd>
                       </div>
@@ -255,19 +255,19 @@ export function ContactPage() {
 
                     {contactRows.map((row) => (
                       <div key={row.label} className="flex items-start gap-4 py-4">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white/70">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white">
                           <row.icon className="h-5 w-5" aria-hidden="true" />
                         </span>
                         <div>
-                          <dt className="text-xs font-semibold uppercase tracking-wider text-white/50">{row.label}</dt>
-                          <dd className="mt-1 text-sm text-white/70">{row.value}</dd>
+                          <dt className="text-xs font-semibold uppercase tracking-wider text-white">{row.label}</dt>
+                          <dd className="mt-1 text-sm text-white">{row.value}</dd>
                         </div>
                       </div>
                     ))}
                   </dl>
 
-                  <div className="mt-6 flex items-start gap-2.5 rounded-xl bg-white/5 p-4 text-xs leading-relaxed text-white/65 ring-1 ring-white/10">
-                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#D9A441]" aria-hidden="true" />
+                  <div className="mt-6 flex items-start gap-2.5 rounded-xl bg-white/10 p-4 text-xs leading-relaxed text-white ring-1 ring-white/20">
+                    <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-[#E45532]" aria-hidden="true" />
                     <p>
                       <span className="font-semibold text-white">Verification notice. </span>
                       Map embeds and direct phone and email links are withheld until the street address and official
@@ -279,12 +279,12 @@ export function ContactPage() {
                   <ol className="mt-4 space-y-4">
                     {steps.map((step, i) => (
                       <li key={step.title} className="flex items-start gap-4">
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#D9A441] font-display text-sm font-bold text-[#0B1A1C]">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E45532] font-display text-sm font-bold text-[#102A43]">
                           {i + 1}
                         </span>
                         <div>
                           <p className="text-sm font-semibold">{step.title}</p>
-                          <p className="mt-0.5 text-sm leading-relaxed text-white/60">{step.text}</p>
+                          <p className="mt-0.5 text-sm leading-relaxed text-white">{step.text}</p>
                         </div>
                       </li>
                     ))}
@@ -296,26 +296,26 @@ export function ContactPage() {
             {/* FORM CARD */}
             <section
               aria-labelledby="enquiry-heading"
-              className="rounded-2xl border border-[#0B1A1C]/10 bg-white p-6 shadow-[0_1px_2px_rgba(11,26,28,0.04),0_8px_24px_-12px_rgba(11,26,28,0.12)] sm:p-9 lg:col-span-7"
+              className="rounded-2xl border border-[#102A43]/10 bg-white p-6 shadow-[0_1px_2px_rgba(16,42,67,0.04),0_8px_24px_-12px_rgba(16,42,67,0.12)] sm:p-9 lg:col-span-7"
             >
               {submissionResult ? (
                 <div role="status" className="py-8 text-center sm:py-14">
-                  <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#0E2A2D] text-[#D9A441]">
+                  <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#075B91] text-[#E45532]">
                     <CheckCircle2 className="h-8 w-8" aria-hidden="true" />
                   </span>
                   <h2 id="enquiry-heading" className="mt-6 font-display text-2xl font-bold sm:text-3xl">
                     Enquiry received
                   </h2>
-                  <p className="mx-auto mt-3 inline-block rounded-full bg-[#D9A441]/15 px-4 py-1.5 text-sm font-semibold text-[#8A6414]">
+                  <p className="mx-auto mt-3 inline-block rounded-full bg-[#E45532]/15 px-4 py-1.5 text-sm font-semibold text-[#B5472A]">
                     Reference: {submissionResult.referenceId}
                   </p>
-                  <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-[#3D5255]">
+                  <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-[#334E68]">
                     {submissionResult.message}
                   </p>
                   <button
                     type="button"
                     onClick={() => setSubmissionResult(null)}
-                    className={`mt-8 rounded-lg border border-[#0B1A1C]/20 px-6 py-3 text-sm font-semibold hover:bg-[#EEF2F1] ${ring}`}
+                    className={`mt-8 rounded-lg border border-[#102A43]/20 px-6 py-3 text-sm font-semibold hover:bg-[#EEF5FA] ${ring}`}
                   >
                     Send another enquiry
                   </button>
@@ -326,7 +326,7 @@ export function ContactPage() {
                     <h2 id="enquiry-heading" className="font-display text-2xl font-bold">
                       Component enquiry form
                     </h2>
-                    <p className="mt-1.5 text-sm text-[#64736F]">
+                    <p className="mt-1.5 text-sm text-[#64748B]">
                       Fields marked with * are required for engineering and quotation validation.
                     </p>
                   </div>
@@ -344,8 +344,8 @@ export function ContactPage() {
                   <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
                     {/* Group 1 */}
                     <fieldset className="space-y-5">
-                      <legend className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A6414]">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0E2A2D] text-[10px] text-white">
+                      <legend className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#B5472A]">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#075B91] text-[10px] text-white">
                           1
                         </span>
                         Your details
@@ -422,8 +422,8 @@ export function ContactPage() {
 
                     {/* Group 2 */}
                     <fieldset className="space-y-5">
-                      <legend className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A6414]">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0E2A2D] text-[10px] text-white">
+                      <legend className="mb-1 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#B5472A]">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#075B91] text-[10px] text-white">
                           2
                         </span>
                         Your requirement
@@ -452,7 +452,7 @@ export function ContactPage() {
                               <option value="Other Custom Drawing Component">Other Custom Drawing Component</option>
                             </select>
                             <ChevronDown
-                              className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64736F]"
+                              className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#64748B]"
                               aria-hidden="true"
                             />
                           </div>
@@ -489,8 +489,8 @@ export function ContactPage() {
 
                     {/* Group 3 */}
                     <fieldset>
-                      <legend className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#8A6414]">
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0E2A2D] text-[10px] text-white">
+                      <legend className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#B5472A]">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#075B91] text-[10px] text-white">
                           3
                         </span>
                         Drawing (optional)
@@ -498,13 +498,13 @@ export function ContactPage() {
 
                       <label
                         htmlFor="drawingUpload"
-                        className="group flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#0B1A1C]/20 bg-[#F4F7F6] px-5 py-8 text-center transition-colors hover:border-[#0E2A2D] hover:bg-[#EEF2F1] focus-within:border-[#0E2A2D]"
+                        className="group flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#102A43]/20 bg-[#F2F7FB] px-5 py-8 text-center transition-colors hover:border-[#075B91] hover:bg-[#EEF5FA] focus-within:border-[#075B91]"
                       >
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0E2A2D] text-[#D9A441] transition-transform group-hover:scale-105">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#075B91] text-[#E45532] transition-transform group-hover:scale-105">
                           <Upload className="h-5 w-5" aria-hidden="true" />
                         </span>
                         <span className="mt-3 text-sm font-semibold">Click to upload your drawing</span>
-                        <span className="mt-1 text-xs text-[#64736F]">PDF, DXF, DWG, STEP, IGES, PNG, JPG · Max 5 MB</span>
+                        <span className="mt-1 text-xs text-[#64748B]">PDF, DXF, DWG, STEP, IGES, PNG, JPG · Max 5 MB</span>
                         <input
                           id="drawingUpload"
                           type="file"
@@ -515,14 +515,14 @@ export function ContactPage() {
                       </label>
 
                       {selectedFile && (
-                        <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[#0B1A1C]/10 bg-white px-4 py-3">
+                        <div className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-[#102A43]/10 bg-white px-4 py-3">
                           <div className="flex min-w-0 items-center gap-3">
-                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EEF2F1] text-[#0E2A2D]">
+                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#EEF5FA] text-[#075B91]">
                               <FileText className="h-4 w-4" aria-hidden="true" />
                             </span>
                             <span className="min-w-0">
                               <span className="block truncate text-sm font-semibold">{selectedFile.name}</span>
-                              <span className="block text-xs text-[#64736F]">
+                              <span className="block text-xs text-[#64748B]">
                                 {Math.round(selectedFile.size / 1024)} KB attached
                               </span>
                             </span>
@@ -531,7 +531,7 @@ export function ContactPage() {
                             type="button"
                             onClick={() => setSelectedFile(null)}
                             aria-label="Remove attached drawing"
-                            className={`rounded-full p-1.5 text-[#64736F] hover:bg-red-50 hover:text-red-600 ${ring}`}
+                            className={`rounded-full p-1.5 text-[#64748B] hover:bg-red-50 hover:text-red-600 ${ring}`}
                           >
                             <X className="h-4 w-4" />
                           </button>
@@ -544,14 +544,14 @@ export function ContactPage() {
                       )}
                     </fieldset>
 
-                    <div className="flex flex-col gap-4 border-t border-[#0B1A1C]/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                      <p className="max-w-xs text-xs leading-relaxed text-[#64736F]">
+                    <div className="flex flex-col gap-4 border-t border-[#102A43]/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                      <p className="max-w-xs text-xs leading-relaxed text-[#64748B]">
                         Your drawing and details are used only to prepare your quotation.
                       </p>
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`inline-flex items-center justify-center gap-2 rounded-lg bg-[#0E2A2D] px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#14393D] disabled:cursor-not-allowed disabled:opacity-60 ${ring}`}
+                        className={`inline-flex items-center justify-center gap-2 rounded-lg bg-[#075B91] px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#064B79] disabled:cursor-not-allowed disabled:opacity-60 ${ring}`}
                       >
                         {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
                         {isSubmitting ? 'Submitting requirement...' : 'Submit requirement'}

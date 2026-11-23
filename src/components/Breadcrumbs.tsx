@@ -22,7 +22,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
               ) : (
                 <Link
                   to={item.path}
-                  className="hover:text-[#155EEF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] rounded-xs"
+                  className="hover:text-[#0869A8] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0869A8] rounded-xs"
                 >
                   {item.name}
                 </Link>

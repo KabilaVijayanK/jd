@@ -5,7 +5,7 @@
 //   2. Copy the ID at the end of the URL (here: 3haIGP0Z2ME)
 //   3. Paste it below, per category or per product.
 
-const unsplash = (photoId: string, width = 900) =>
+export const unsplash = (photoId: string, width = 1200) =>
   `https://unsplash.com/photos/${photoId}/download?force=true&w=${width}`;
 
 // Used when a category or product has no photo of its own yet.

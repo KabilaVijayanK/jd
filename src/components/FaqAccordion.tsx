@@ -27,13 +27,13 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className="w-full py-5 px-2 sm:px-4 flex items-center justify-between gap-6 text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#155EEF] rounded-md"
+                className="w-full py-5 px-2 sm:px-4 flex items-center justify-between gap-6 text-left group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0869A8] rounded-md"
               >
                 <span className="flex items-baseline gap-4">
-                  <span className="font-mono text-xs text-[#155EEF] tabular-nums shrink-0">
+                  <span className="font-mono text-xs text-[#0869A8] tabular-nums shrink-0">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <span className="font-display text-base sm:text-lg font-semibold text-[#102A43] group-hover:text-[#155EEF] transition-colors">
+                  <span className="font-display text-base sm:text-lg font-semibold text-[#102A43] group-hover:text-[#0869A8] transition-colors">
                     {item.question}
                   </span>
                 </span>
@@ -41,8 +41,8 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
                   aria-hidden="true"
                   className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 border transition-colors ${
                     isOpen
-                      ? 'bg-[#155EEF] border-[#155EEF] text-white'
-                      : 'bg-[#F5F8FC] border-[#E2E8F0] text-[#102A43] group-hover:border-[#155EEF]'
+                      ? 'bg-[#0869A8] border-[#0869A8] text-white'
+                      : 'bg-[#F5F8FC] border-[#E2E8F0] text-[#102A43] group-hover:border-[#0869A8]'
                   }`}
                 >
                   {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}

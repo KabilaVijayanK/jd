@@ -1,7 +1,16 @@
+import { unsplash } from './productImages';
+
 export interface ProductItem {
   name: string;
   note: string;
   specStatus: string;
+}
+
+export interface ProductImage {
+  url: string;
+  alt: string;
+  credit: string;
+  creditUrl: string;
 }
 
 export interface ProductCategory {
@@ -9,6 +18,7 @@ export interface ProductCategory {
   slug: string;
   code: string;
   title: string;
+  image: ProductImage;
   shortDescription: string;
   fullDescription: string;
   materialsNote: string;
@@ -110,6 +120,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'axle-shafts',
     code: 'CAT-01',
     title: 'Axle Shafts',
+    image: {
+      url: unsplash('k76Iqu0S120'),
+      alt: 'Steel machinery and industrial machined components',
+      credit: 'Brando Louhivaara',
+      creditUrl: 'https://unsplash.com/photos/k76Iqu0S120',
+    },
     shortDescription:
       'Precision-turned electric vehicle and automotive rear axle shafts machined to OEM dimensional profiles.',
     fullDescription:
@@ -150,6 +166,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'metal-shafts',
     code: 'CAT-02',
     title: 'Metal Shafts',
+    image: {
+      url: unsplash('_VBsh_IKsD8'),
+      alt: 'Metal lathe in a workshop',
+      credit: 'LISK OBE',
+      creditUrl: 'https://unsplash.com/photos/close-up-of-an-old-metal-lathe-in-a-workshop-_VBsh_IKsD8',
+    },
     shortDescription:
       'Precision-machined metal shafts including EV axle variants and specialized Excel shaft configurations.',
     fullDescription:
@@ -180,6 +202,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'cardan-shafts',
     code: 'CAT-03',
     title: 'Cardan Shafts',
+    image: {
+      url: unsplash('3r_9N1r6nn0'),
+      alt: 'Forging steel with sparks',
+      credit: 'Jacob Diehl',
+      creditUrl: 'https://unsplash.com/photos/a-man-working-on-a-piece-of-metal-3r_9N1r6nn0',
+    },
     shortDescription:
       'Heavy-duty torque transmission and welding shaft assemblies including RMU Welding Shaft and Shaft 6134.',
     fullDescription:
@@ -205,6 +233,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'connecting-rods',
     code: 'CAT-04',
     title: 'Connecting Rods',
+    image: {
+      url: unsplash('GNlLdPeFh2E'),
+      alt: 'Engine cross-section showing internal moving parts',
+      credit: 'William Warby',
+      creditUrl: 'https://unsplash.com/photos/a-close-up-of-a-machine-with-gears-on-it-GNlLdPeFh2E',
+    },
     shortDescription:
       'Precision-bored and CNC/VMC machined connecting rods built to strict center-to-center drawing tolerances.',
     fullDescription:
@@ -225,6 +259,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'cams-and-gears',
     code: 'CAT-05',
     title: 'Cams and Gears',
+    image: {
+      url: unsplash('3haIGP0Z2ME'),
+      alt: 'Close-up of industrial gears and machinery',
+      credit: 'Eric Prouzet',
+      creditUrl: 'https://unsplash.com/photos/close-up-of-old-industrial-gears-and-machinery-3haIGP0Z2ME',
+    },
     shortDescription:
       'Precision-profiled cams and gears engineered for smooth power transmission and timing accuracy.',
     fullDescription:
@@ -250,6 +290,12 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     slug: 'custom-machined-parts',
     code: 'CAT-06',
     title: 'Custom Machined Parts, Jig Fixtures and Receiving Gauges',
+    image: {
+      url: unsplash('OX3fv8D6QAk'),
+      alt: 'CNC machine in an industrial metal workshop',
+      credit: 'Zoshua Colah',
+      creditUrl: 'https://unsplash.com/photos/man-standing-in-a-cluttered-industrial-workshop-OX3fv8D6QAk',
+    },
     shortDescription:
       'Bespoke CNC/VMC machined components, production jig fixtures, and precision receiving gauges built to drawing.',
     fullDescription:

@@ -4,9 +4,9 @@
   --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  --color-brand-blue: #155EEF;
+  --color-brand-blue: #0869A8;
   --color-brand-navy: #102A43;
-  --color-brand-secondary: #2878D0;
+  --color-brand-secondary: #287EB3;
   --color-brand-light: #EAF3FF;
   --color-surface-section: #F5F8FC;
   --color-ink-primary: #263445;
@@ -35,8 +35,8 @@
 
 .engineering-grid-bg {
   background-image:
-    linear-gradient(to right, rgba(21, 94, 239, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(21, 94, 239, 0.055) 1px, transparent 1px);
+    linear-gradient(to right, rgba(8, 105, 168, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(8, 105, 168, 0.055) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
@@ -44,7 +44,7 @@
   background-image:
     linear-gradient(to right, rgba(16, 42, 67, 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(16, 42, 67, 0.035) 1px, transparent 1px),
-    linear-gradient(to right, rgba(21, 94, 239, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(21, 94, 239, 0.07) 1px, transparent 1px);
+    linear-gradient(to right, rgba(8, 105, 168, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(8, 105, 168, 0.07) 1px, transparent 1px);
   background-size: 16px 16px, 16px 16px, 80px 80px, 80px 80px;
 }
