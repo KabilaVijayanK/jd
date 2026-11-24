@@ -53,7 +53,7 @@ const ALLOWED_DRAWING_TYPES = new Set([
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
   const isProd = process.env.NODE_ENV === 'production';
 
   app.use(express.json({ limit: '8mb' }));

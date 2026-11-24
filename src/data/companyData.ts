@@ -1,5 +1,3 @@
-import { unsplash } from './productImages';
-
 export interface ProductItem {
   name: string;
   note: string;
@@ -121,7 +119,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-01',
     title: 'Axle Shafts',
     image: {
-      url: unsplash('k76Iqu0S120'),
+      url: '/images/axle-shafts.jpg',
       alt: 'Steel machinery and industrial machined components',
       credit: 'Brando Louhivaara',
       creditUrl: 'https://unsplash.com/photos/k76Iqu0S120',
@@ -167,7 +165,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-02',
     title: 'Metal Shafts',
     image: {
-      url: unsplash('_VBsh_IKsD8'),
+      url: '/images/metal-shafts.jpg',
       alt: 'Metal lathe in a workshop',
       credit: 'LISK OBE',
       creditUrl: 'https://unsplash.com/photos/close-up-of-an-old-metal-lathe-in-a-workshop-_VBsh_IKsD8',
@@ -203,7 +201,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-03',
     title: 'Cardan Shafts',
     image: {
-      url: unsplash('3r_9N1r6nn0'),
+      url: '/images/cardan-shafts.jpg',
       alt: 'Forging steel with sparks',
       credit: 'Jacob Diehl',
       creditUrl: 'https://unsplash.com/photos/a-man-working-on-a-piece-of-metal-3r_9N1r6nn0',
@@ -234,7 +232,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-04',
     title: 'Connecting Rods',
     image: {
-      url: unsplash('GNlLdPeFh2E'),
+      url: '/images/connecting-rods.jpg',
       alt: 'Engine cross-section showing internal moving parts',
       credit: 'William Warby',
       creditUrl: 'https://unsplash.com/photos/a-close-up-of-a-machine-with-gears-on-it-GNlLdPeFh2E',
@@ -260,7 +258,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-05',
     title: 'Cams and Gears',
     image: {
-      url: unsplash('3haIGP0Z2ME'),
+      url: '/images/cams-and-gears.jpg',
       alt: 'Close-up of industrial gears and machinery',
       credit: 'Eric Prouzet',
       creditUrl: 'https://unsplash.com/photos/close-up-of-old-industrial-gears-and-machinery-3haIGP0Z2ME',
@@ -291,7 +289,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     code: 'CAT-06',
     title: 'Custom Machined Parts, Jig Fixtures and Receiving Gauges',
     image: {
-      url: unsplash('OX3fv8D6QAk'),
+      url: '/images/custom-machined-parts.jpg',
       alt: 'CNC machine in an industrial metal workshop',
       credit: 'Zoshua Colah',
       creditUrl: 'https://unsplash.com/photos/man-standing-in-a-cluttered-industrial-workshop-OX3fv8D6QAk',

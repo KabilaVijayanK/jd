@@ -27,5 +27,8 @@ export const PRODUCT_PHOTO_IDS: Record<string, string> = {
 
 export const getProductImage = (categoryId: string, slug: string, width = 900) => {
   const id = PRODUCT_PHOTO_IDS[`${categoryId}/${slug}`] ?? CATEGORY_PHOTO_IDS[categoryId] ?? DEFAULT_PHOTO_ID;
+  if (!PRODUCT_PHOTO_IDS[`${categoryId}/${slug}`] && !CATEGORY_PHOTO_IDS[categoryId]) {
+    return `/images/${categoryId}.jpg`;
+  }
   return unsplash(id, width);
 };

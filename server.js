@@ -18,7 +18,7 @@ var ALLOWED_DRAWING_TYPES = /* @__PURE__ */ new Set([
 ]);
 async function startServer() {
   const app = express();
-  const PORT = 3e3;
+  const PORT = Number(process.env.PORT) || 3e3;
   const isProd = process.env.NODE_ENV === "production";
   app.use(express.json({ limit: "8mb" }));
   const getBaseUrl = (req) => {
