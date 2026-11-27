@@ -1,472 +1,716 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight,
   ArrowUpRight,
-  FileText,
-  Cog,
-  Drill,
-  Ruler,
-  PackageCheck,
-  Bike,
-  Car,
-  Zap,
-  Truck,
   Check,
+  Cog,
+  GraduationCap,
+  HardHat,
+  HeartHandshake,
+  Lightbulb,
+  Ruler,
+  ShieldCheck,
+  X,
 } from 'lucide-react';
 import { SeoHead } from '../components/SeoHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { CountUpMetric } from '../components/CountUpMetric';
 import { PageShell, RevealBlock } from '../components/MotionPrimitives';
-import { ABOUT_STRENGTHS, COMPANY_FACTS } from '../data/companyData';
+import { COMPANY_HIGHLIGHTS, CUSTOMER_LOGOS } from '../data/companyData';
 
-/* Design idea: a shop-floor spec sheet.
-   - Hero: dark blue blueprint field, big headline, the stepped shaft drawn live (only animated moment).
-   - Stat strip pulled from real company data, overlapping the hero.
-   - Process: the real sequence a drawing follows through the plant.
-   - Industries, machines, materials and strengths as ruled, engineered panels.
-   Palette: blue #075B91, blue-2 #064B79, orange #E45532, mist #EEF5FA, ink #102A43 */
+/*
+  Palette (unchanged brand colours)
+  navy #14263A · ink #0F2338 · blue #17638C · sky #7CCBF7 · mist #E8F5FD · paper #F5F9FC
 
-const unsplash = (id: string, w = 1400) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=${w}`;
+  Design idea: the page reads like an engineering drawing sheet.
+  - Dimension lines and a title block in the hero
+  - Hairline-ruled sections instead of floating cards
+  - Sky blue is the single loud colour, used for the final call to action
+*/
 
-const PHOTO = {
-  story: '1769147339214-076740872485', // metal parts on engineering blueprints
-  expertise: '1666634157070-6fd830fb5672', // metal rod machined on a lathe
-  cta: '1764114235916-74de69e6851f', // industrial laser cutting
-};
+// Hero background: free Unsplash photo "Close-up of an old metal lathe in a workshop" (LISK OBE).
+// https://unsplash.com/photos/close-up-of-an-old-metal-lathe-in-a-workshop-_VBsh_IKsD8
+// If it ever fails to load, open that page, copy the image address (images.unsplash.com/...)
+// and paste it below, adding ?auto=format&fit=crop&w=1920&q=80 at the end.
+const HERO_IMAGE_SRC = 'https://unsplash.com/photos/_VBsh_IKsD8/download?force=true&w=1920';
+const HERO_IMAGE_ALT = 'Close-up of a metal lathe in a machining workshop';
 
-function Photo({ id, alt = '', w = 1400, className = '' }: { id: string; alt?: string; w?: number; className?: string }) {
-  const [failed, setFailed] = useState(false);
-  if (failed) return <div className={`h-full w-full bg-[#064B79] ${className}`} />;
+const suppliers = [
+  'Kalyani Steels Ltd.',
+  'Artee Steels Ltd.',
+  'Arora Iron & Steel',
+  'Bhushan Steel',
+  'Nico Jaiswal',
+];
+
+const values = [
+  {
+    title: 'Safety',
+    description: "The safety of our employees and the travelling public is everyone's responsibility.",
+    icon: HardHat,
+  },
+  {
+    title: 'Integrity',
+    description:
+      'Our business conduct includes the highest level of honesty, ethics and moral correctness.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Respect',
+    description:
+      'Respect is the basic rule of behaviour that guides every employee in all their actions.',
+    icon: HeartHandshake,
+  },
+  {
+    title: 'Entrepreneurship',
+    description:
+      'Each employee should show initiative and be motivated by a desire to win, to commit and to succeed.',
+    icon: Lightbulb,
+  },
+];
+
+const differences = [
+  {
+    title: 'Stringent quality checks',
+    description:
+      'Stringent quality checks on each parameter at every stage of the manufacturing process.',
+  },
+  {
+    title: 'Global manufacturing practices',
+    description: 'Following best global practices in turning machine manufacturing.',
+  },
+  {
+    title: 'Advanced technology',
+    description: 'Latest technology on par with global counterparts.',
+  },
+  {
+    title: 'Research and innovation',
+    description: 'Uncompromised focus on research and innovation.',
+  },
+];
+
+const teamCapabilities = [
+  'Highly Qualified Engineers',
+  'Professionals with Corporate Background',
+  '15+ Years of Experience in Sourcing',
+  'Strong Understanding of Global Quality Expectations',
+];
+
+const qualityItems = [
+  { title: 'Quality Inspection Process', icon: Ruler },
+  { title: 'Manufacturing Quality Checks', icon: Check },
+  { title: 'Inspection Equipment', icon: Cog },
+  { title: 'Quality-Focused Workforce', icon: GraduationCap },
+];
+
+const policyItems = [
+  {
+    title: 'Customer satisfaction',
+    description:
+      'Customer satisfaction is reflected through commitments, actions, products and services.',
+  },
+  {
+    title: 'Quality products and timely delivery',
+    description: 'The service we provide is founded on quality products and delivery commitments.',
+  },
+  {
+    title: 'Defect prevention and improvement',
+    description:
+      'An encouraging environment helps employees and suppliers prevent defects and pursue excellence.',
+  },
+];
+
+const certificateFacts = [
+  ['Company', 'J.D. Associates'],
+  ['Standard', 'ISO 9001:2015'],
+  ['Management system', 'Quality Management Systems'],
+  ['Activity', 'Manufacture and supply of precision machined components'],
+];
+
+/** Section heading with a short sky rule that echoes a drawing datum line. */
+function SectionHeading({
+  label,
+  children,
+  dark = false,
+  className = '',
+}: {
+  label: string;
+  children: React.ReactNode;
+  dark?: boolean;
+  className?: string;
+}) {
   return (
-    <img
-      src={unsplash(id, w)}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      referrerPolicy="no-referrer"
-      onError={() => setFailed(true)}
-      className={`h-full w-full object-cover ${className}`}
-    />
+    <div className={className}>
+      <p
+        className={`flex items-center gap-3 text-sm font-semibold ${
+          dark ? 'text-[#7CCBF7]' : 'text-[#17638C]'
+        }`}
+      >
+        <span className="h-0.5 w-8 bg-[#7CCBF7]" aria-hidden="true" />
+        {label}
+      </p>
+      <h2
+        className={`mt-4 font-display text-3xl font-bold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl ${
+          dark ? 'text-white' : 'text-[#14263A]'
+        }`}
+      >
+        {children}
+      </h2>
+    </div>
   );
 }
 
-/* Hero drawing: stepped shaft, centerline and dimensions. */
-function ShaftDrawing() {
+function CertificateModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const reduced = useReducedMotion();
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open, onClose]);
+
   return (
-    <figure>
-      <style>{`
-        .jd-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: jd-draw 2.2s cubic-bezier(.6,.1,.2,1) .2s forwards; }
-        .jd-dim { opacity: 0; animation: jd-fade .8s ease 1.8s forwards; }
-        @keyframes jd-draw { to { stroke-dashoffset: 0; } }
-        @keyframes jd-fade { to { opacity: 1; } }
-        @media (prefers-reduced-motion: reduce) {
-          .jd-draw { animation: none; stroke-dashoffset: 0; }
-          .jd-dim { animation: none; opacity: 1; }
-        }
-      `}</style>
-      <div className="rounded-lg bg-[#075B91] p-3 sm:p-5">
-        <svg
-          viewBox="0 0 640 320"
-          role="img"
-          aria-label="Technical drawing of a stepped precision shaft with length and diameter dimensions"
-          className="h-auto w-full text-white"
-          fill="none"
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={reduced ? undefined : { opacity: 0 }}
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-[#0F2338]/90 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="certificate-title"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) onClose();
+          }}
         >
-          <defs>
-            <pattern id="jd-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-              <path d="M20 0H0V20" stroke="#fff" strokeOpacity=".07" />
-            </pattern>
-          </defs>
-          <rect width="640" height="320" fill="url(#jd-grid)" />
-          <path d="M20 150H600" stroke="#E45532" strokeWidth="1" strokeDasharray="14 4 2 4" opacity=".8" />
-          <path
-            className="jd-draw"
-            pathLength={1}
-            d="M40 120H120V100H260V80H420V100H520V120H560V180H520V200H420V220H260V200H120V180H40Z"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinejoin="round"
-          />
-          <g className="jd-draw" stroke="currentColor" strokeOpacity=".55" strokeWidth="1" pathLength={1}>
-            <path d="M120 120V180M260 100V200M420 100V200M520 120V180" pathLength={1} />
-          </g>
-          <g className="jd-dim" stroke="#E45532" strokeWidth="1">
-            <path d="M40 232V268M560 190V268" strokeOpacity=".6" />
-            <path d="M40 260H560" />
-            <path d="M40 260l9-4v8zM560 260l-9-4v8z" fill="#E45532" />
-          </g>
-          <text className="jd-dim" x="300" y="252" fill="#E45532" fontSize="13" textAnchor="middle" fontWeight="600">
-            L = per drawing
-          </text>
-          <g className="jd-dim" stroke="#E45532" strokeWidth="1">
-            <path d="M420 80H600M420 220H600" strokeOpacity=".6" />
-            <path d="M590 80V220" />
-            <path d="M590 80l-4 9h8zM590 220l-4-9h8z" fill="#E45532" />
-          </g>
-          <text className="jd-dim" x="606" y="156" fill="#E45532" fontSize="13" fontWeight="600">
-            Ø
-          </text>
-          <g className="jd-dim">
-            <path d="M340 80L372 40H470" stroke="#fff" strokeOpacity=".6" />
-            <text x="378" y="34" fill="#fff" fontSize="12" fillOpacity=".85">
-              CNC turned + VMC finished
-            </text>
-          </g>
-        </svg>
-      </div>
-      <figcaption className="mt-3 text-xs text-[#64748B]">Every part starts as a customer drawing like this one.</figcaption>
-    </figure>
+          <motion.div
+            initial={reduced ? false : { opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={reduced ? undefined : { opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.22 }}
+            className="relative max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-2xl bg-white p-5 shadow-2xl sm:p-8"
+          >
+            <button
+              type="button"
+              onClick={onClose}
+              autoFocus
+              className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#CFE6F5] bg-white text-[#14263A] transition-colors hover:bg-[#E8F5FD] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17638C]"
+              aria-label="Close certificate preview"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+            <h2 id="certificate-title" className="pr-12 font-display text-2xl font-bold text-[#14263A]">
+              ISO 9001:2015 certificate
+            </h2>
+            <div className="mt-5 flex justify-center overflow-auto rounded-xl border border-[#CFE6F5] bg-[#F5F9FC] p-3 sm:p-5">
+              <img
+                src="/about/certificate.png"
+                alt="ISO 9001:2015 quality management certificate for J.D. Associates"
+                className="h-auto max-h-[calc(92vh-12rem)] w-full object-contain"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
-
-const PROCESS = [
-  { icon: FileText, title: 'Drawing review', text: 'We study your drawing, tolerances and material before cutting begins.' },
-  { icon: Cog, title: 'CNC turning', text: 'Shafts, couplings and rods are turned on CNC centers.' },
-  { icon: Drill, title: 'VMC finishing', text: 'Keyways, flats, cams and gear features are finished on VMCs.' },
-  { icon: Ruler, title: 'Gauge check', text: 'Parts are verified against production receiving gauges.' },
-  { icon: PackageCheck, title: 'Delivery', text: 'Batches ship on the date we agreed with you.' },
-];
-
-const INDUSTRIES = [
-  { icon: Bike, label: 'Two-wheeler' },
-  { icon: Truck, label: 'Three-wheeler' },
-  { icon: Zap, label: 'E-Rickshaw' },
-  { icon: Car, label: 'Four-wheeler' },
-];
-
-const MAKES = [
-  'Automotive shafts',
-  'EV axle shafts',
-  'Cardan shafts',
-  'Connecting rods',
-  'Cams and gears',
-  'Custom jig fixtures',
-];
 
 export function AboutPage() {
+  const [certificateOpen, setCertificateOpen] = useState(false);
+  const [heroImageFailed, setHeroImageFailed] = useState(false);
+  const reduced = useReducedMotion();
   const breadcrumbs = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about-us/' },
   ];
 
-  const stats = [
-    { value: '2000', label: 'Year established' },
-    { value: COMPANY_FACTS.teamSize, label: 'Skilled team members' },
-    { value: String(COMPANY_FACTS.machineryBrands.length), label: 'Machine brands on the floor' },
-    { value: String(COMPANY_FACTS.materials.length), label: 'Materials machined' },
-  ];
-
-  const titleBlock = [
-    { label: 'Business type', value: COMPANY_FACTS.businessType },
-    { label: 'Established', value: COMPANY_FACTS.established },
-    { label: 'Legal status', value: COMPANY_FACTS.legalStatus },
-    { label: 'Team size', value: COMPANY_FACTS.teamSize },
-    { label: 'Location', value: COMPANY_FACTS.location },
-  ];
-
   return (
     <PageShell>
       <SeoHead
-        title="About J.D. Associates | Precision Shaft Manufacturer Since 2000"
-        description="Learn about J.D. Associates, a Partnership Firm established in May 2000 in Faridabad, Haryana, specializing in CNC and VMC machined shafts and automotive components."
+        title="About JD Associates | Precision Engineering & Manufacturing"
+        description="Learn about JD Associates, a precision machining company focused on quality components, skilled manufacturing and customer-drawing-based production."
         canonicalPath="/about-us/"
         breadcrumbs={breadcrumbs}
       />
 
-      <main className="flex-1 bg-[#EEF5FA] text-[#102A43]">
-        {/* HERO: white background */}
-        <section className="relative overflow-hidden bg-white pb-20 pt-28 lg:pb-24 lg:pt-36">
-          <div className="absolute inset-y-0 left-0 w-1.5 bg-[#E45532]" aria-hidden="true" />
+      <main className="flex-1 bg-white text-[#172B42]">
+        {/* Hero: full-bleed blue-tinted photo, large left-aligned headline, square buttons */}
+        <section className="relative isolate overflow-hidden bg-[#0B0F14] pb-10 pt-32 text-white lg:pb-14 lg:pt-40">
+          {!heroImageFailed && (
+            <img
+              src={HERO_IMAGE_SRC}
+              alt={HERO_IMAGE_ALT}
+              onError={() => setHeroImageFailed(true)}
+              className="absolute inset-0 -z-20 h-full w-full object-cover"
+              fetchPriority="high"
+              referrerPolicy="no-referrer"
+            />
+          )}
+          <div className="absolute inset-0 -z-[15] engineering-grid-bg opacity-20" aria-hidden="true" />
+          {/* Dark overlay: strongest on the left behind the text, easing off to the right */}
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-r from-black/85 via-black/60 to-black/25"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-t from-black/60 via-transparent to-black/30"
+            aria-hidden="true"
+          />
+          {/* Short accent bar at the top-left edge */}
+          <span className="absolute left-0 top-0 h-1 w-24 bg-[#7CCBF7] sm:left-6 lg:left-8" aria-hidden="true" />
 
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Breadcrumbs items={breadcrumbs} />
-
-            <div className="mt-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
-              <div className="lg:col-span-6">
-                <h1 className="font-display text-5xl font-bold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-                  Precision shafts, machined to your drawing.
-                </h1>
-                <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#334E68]">
-                  J.D. Associates is a Partnership Firm in Faridabad, Haryana. Since May 2000 we have turned and
-                  finished components for India&apos;s automotive and engineering industry.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    to="/contact-us/"
-                    className="inline-flex items-center gap-2 rounded-md bg-[#075B91] px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-[#064B79] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532] focus-visible:ring-offset-2"
-                  >
-                    Request a quote
-                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                  <Link
-                    to="/products/"
-                    className="inline-flex items-center rounded-md border border-[#102A43]/25 px-7 py-4 text-sm font-semibold transition-colors hover:bg-[#EEF5FA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E45532]"
-                  >
-                    See our products
-                  </Link>
-                </div>
-              </div>
-              <div className="lg:col-span-6">
-                <ShaftDrawing />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* STAT STRIP */}
-        <section className="relative z-10 -mt-px pt-10 lg:pt-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <dl className="grid grid-cols-2 overflow-hidden rounded-lg border-b-4 border-[#E45532] bg-white shadow-md ring-1 ring-[#102A43]/10 lg:grid-cols-4">
-              {stats.map((s, i) => (
-                <div
-                  key={s.label}
-                  className={`p-6 lg:p-8 ${i % 2 === 1 ? 'border-l border-[#102A43]/10' : ''} ${
-                    i >= 2 ? 'border-t border-[#102A43]/10 lg:border-t-0' : ''
-                  } ${i > 0 ? 'lg:border-l lg:border-[#102A43]/10' : ''}`}
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-3xl text-left"
+            >
+              <div className="[&_*]:!text-white/80">
+                <Breadcrumbs items={breadcrumbs} />
+              </div>
+              <h1 className="mt-8 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+                Engineering precision. Manufacturing excellence.
+              </h1>
+              <p className="mt-8 max-w-2xl text-base leading-relaxed text-white sm:text-lg lg:text-xl">
+                JD Associates is committed to precision machining and manufacturing high-quality
+                engineering components. With advanced manufacturing facilities, skilled
+                professionals and a strong focus on quality, we manufacture components according
+                to customer drawings and specifications.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  to="/#machine-profile-heading"
+                  className="inline-flex items-center gap-3 bg-[#17638C] px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-[#0F2338] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                 >
-                  <dd className="font-display text-3xl font-bold tabular-nums text-[#075B91] lg:text-4xl">{s.value}</dd>
-                  <dt className="mt-1 text-sm text-[#334E68]">{s.label}</dt>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-
-        {/* STORY */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
-            <RevealBlock delay={0.08} className="order-2 lg:order-1 lg:col-span-6">
-              <div className="relative">
-                <div className="aspect-[4/3] overflow-hidden rounded-lg bg-[#075B91]">
-                  <Photo id={PHOTO.story} alt="Machined metal parts resting on engineering drawings" />
-                </div>
-                <div className="absolute -bottom-5 right-5 rounded-md border-l-4 border-[#E45532] bg-[#102A43] px-5 py-4 text-white shadow-xl sm:right-8">
-                  <p className="font-display text-2xl font-bold">Since 2000</p>
-                  <p className="mt-0.5 text-xs text-white/70">Manufacturing in Faridabad</p>
-                </div>
+                  Explore our capabilities
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  to="/contact-us/"
+                  className="inline-flex items-center gap-3 bg-white px-8 py-4 text-sm font-bold text-[#14263A] transition-colors hover:bg-[#7CCBF7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  Contact our team
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
               </div>
-            </RevealBlock>
-
-            <RevealBlock className="order-1 space-y-5 lg:order-2 lg:col-span-6">
-              <h2 className="font-display text-3xl font-bold leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
-                Precision machining roots in Faridabad
-              </h2>
-              <p className="max-w-xl text-base leading-relaxed text-[#334E68] sm:text-lg">
-                Since 2000 we have focused on drawing-driven component manufacturing. From the industrial hub of
-                Faridabad, we supply two-wheeler, three-wheeler, E-Rickshaw, and four-wheeler OEM requirements.
-              </p>
-              <p className="max-w-xl text-base leading-relaxed text-[#334E68] sm:text-lg">
-                A team of {COMPANY_FACTS.teamSize} skilled people and dedicated R&amp;D support turn client drawings
-                into repeatable, accurately machined components: axle shaft configurations, production receiving
-                gauges, and custom workholding fixtures.
-              </p>
-              <ul className="grid grid-cols-1 gap-x-6 gap-y-2 pt-2 sm:grid-cols-2">
-                {MAKES.map((m) => (
-                  <li key={m} className="flex items-center gap-2 text-sm font-medium">
-                    <Check className="h-4 w-4 shrink-0 text-[#E45532]" aria-hidden="true" />
-                    {m}
-                  </li>
+            </motion.div>
+          </div>
+          <div className="mx-auto mt-14 max-w-7xl px-4 sm:px-6 lg:px-8">
+            <RevealBlock delay={0.18}>
+              <dl
+                aria-label="JD Associates manufacturing statistics"
+                className="grid grid-cols-2 border-y border-white/20 bg-black/25 backdrop-blur-md lg:grid-cols-4"
+              >
+                {COMPANY_HIGHLIGHTS.map((item, index) => (
+                  <div
+                    key={item.title}
+                    className={`py-4 pr-4 sm:py-5 ${
+                      index % 2 === 1 ? 'border-l border-white/20 pl-4' : ''
+                    } ${
+                      index > 1 ? 'border-t border-white/20 lg:border-t-0' : ''
+                    } ${index > 0 ? 'lg:border-l lg:border-white/20 lg:pl-6' : ''}`}
+                  >
+                    <dt className="text-xs font-semibold text-white/75 sm:text-sm">{item.title}</dt>
+                    <dd className="mt-1 font-display text-3xl font-bold tabular-nums text-white sm:text-4xl">
+                      <CountUpMetric target={item.metric} />
+                    </dd>
+                  </div>
                 ))}
-              </ul>
+              </dl>
             </RevealBlock>
           </div>
         </section>
 
-        {/* PROCESS: a real sequence, so numbered */}
-        <section className="bg-[#102A43] py-20 text-white lg:py-28">
+        <section className="bg-white pb-20 lg:pb-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-14 max-w-2xl">
-              <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                From drawing to delivery
-              </h2>
-              <p className="mt-4 leading-relaxed text-white/70">
-                Every order follows the same five steps, so quality and lead times stay predictable.
-              </p>
-            </div>
-
-            <ol className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-white/15 sm:grid-cols-2 lg:grid-cols-5">
-              {PROCESS.map((step, i) => (
-                <RevealBlock key={step.title} delay={i * 0.05} className="bg-[#102A43]">
-                  <li className="flex h-full flex-col p-6 lg:p-7">
-                    <div className="flex items-center justify-between">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-md bg-[#075B91]">
-                        <step.icon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                      <span className="font-display text-sm font-bold tabular-nums text-[#E45532]">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <h3 className="mt-6 font-display text-lg font-bold">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/65">{step.text}</p>
-                  </li>
-                </RevealBlock>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* EXPERTISE + MATERIALS */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 items-stretch gap-8 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
-            <RevealBlock className="lg:col-span-7">
-              <div className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-[#102A43]/10">
-                <div className="aspect-[16/8] overflow-hidden bg-[#075B91]">
-                  <Photo id={PHOTO.expertise} alt="Metal rod being machined on a CNC lathe" />
-                </div>
-                <div className="p-7 lg:p-9">
-                  <h2 className="font-display text-3xl font-bold tracking-tight lg:text-4xl">
-                    Our manufacturing expertise
-                  </h2>
-                  <p className="mt-4 max-w-xl leading-relaxed text-[#334E68]">
-                    CNC turning centers and vertical machining centers (VMC) work together to make shafts,
-                    rotational couplings, connecting rods, cams, gears, and custom tooling to your drawing.
-                  </p>
-                </div>
-              </div>
-            </RevealBlock>
-
-            <RevealBlock delay={0.08} className="lg:col-span-5">
-              <div className="h-full rounded-lg bg-[#075B91] p-7 text-white lg:p-9">
-                <h3 className="font-display text-2xl font-bold">Materials we machine</h3>
-                <ul className="mt-6 border-t border-white/25">
-                  {COMPANY_FACTS.materials.map((metal) => (
-                    <li key={metal} className="flex items-center gap-3 border-b border-white/15 py-3.5 text-sm font-medium">
-                      <span className="h-px w-5 bg-[#E45532]" aria-hidden="true" />
-                      {metal}
+            <div className="grid grid-cols-1 gap-10 pt-20 lg:grid-cols-12 lg:gap-16 lg:pt-28">
+              <SectionHeading label="Who we are" className="lg:col-span-6">
+                Building precision through manufacturing expertise.
+              </SectionHeading>
+              <div className="lg:col-span-6">
+                <p className="leading-relaxed text-[#334E68] sm:text-lg">
+                  JD Associates offers precision machining of components made from various
+                  materials. The company is equipped with advanced manufacturing machines operated
+                  by skilled professionals to produce components according to customer
+                  requirements.
+                </p>
+                <p className="mt-4 leading-relaxed text-[#334E68]">
+                  Our expertise in high-quality precision machining enables us to manufacture
+                  parts while maintaining strict quality control and quality assurance practices.
+                  We focus on continuous improvement through training, coaching and continuing
+                  education.
+                </p>
+                <ul className="mt-8 grid grid-cols-1 border-y border-[#CFE6F5] sm:grid-cols-2">
+                  {[
+                    'Precision machining',
+                    'Skilled professionals',
+                    'Quality control',
+                    'Continuous improvement',
+                  ].map((highlight, index) => (
+                    <li
+                      key={highlight}
+                      className={`flex items-center gap-3 py-4 text-sm font-semibold text-[#14263A] ${
+                        index % 2 === 1 ? 'sm:pl-6' : ''
+                      } ${index > 1 ? 'border-t border-[#CFE6F5]' : ''} ${
+                        index === 1 ? 'border-t border-[#CFE6F5] sm:border-l sm:border-t-0' : ''
+                      } ${index === 3 ? 'sm:border-l' : ''}`}
+                    >
+                      <Check className="h-4 w-4 shrink-0 text-[#17638C]" aria-hidden="true" />
+                      {highlight}
                     </li>
                   ))}
                 </ul>
               </div>
-            </RevealBlock>
-          </div>
-        </section>
-
-        {/* INDUSTRIES */}
-        <section className="pb-20 lg:pb-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-10 font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              Vehicles we build components for
-            </h2>
-            <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {INDUSTRIES.map((ind, i) => (
-                <RevealBlock key={ind.label} delay={i * 0.04}>
-                  <div className="group flex h-full items-center gap-4 rounded-lg border border-[#102A43]/15 bg-white p-5 transition-colors hover:border-[#075B91] hover:bg-[#075B91] hover:text-white">
-                    <ind.icon className="h-7 w-7 text-[#075B91] transition-colors group-hover:text-[#E45532]" aria-hidden="true" />
-                    <span className="font-display text-lg font-bold">{ind.label}</span>
-                  </div>
-                </RevealBlock>
-              ))}
             </div>
           </div>
         </section>
 
-        {/* INFRASTRUCTURE */}
-        <section className="border-y border-[#102A43]/10 bg-white py-20 lg:py-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-14 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-              <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                Our infrastructure
-              </h2>
-              <p className="max-w-sm leading-relaxed text-[#334E68]">
-                Our machining floor runs CNC and VMC equipment from established industrial machinery brands.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {COMPANY_FACTS.machineryBrands.map((machine, idx) => (
-                <RevealBlock key={machine.brand} delay={idx * 0.05}>
-                  <div className="h-full rounded-lg border-t-4 border-[#075B91] bg-[#EEF5FA] p-6 transition-colors hover:border-[#E45532]">
-                    <h3 className="font-display text-2xl font-bold">{machine.brand}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[#334E68]">{machine.role}</p>
-                  </div>
-                </RevealBlock>
-              ))}
+        {/* Mission & vision */}
+        <section className="bg-[#E8F5FD] py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <figure className="lg:col-span-7">
+              <figcaption className="flex items-center gap-3 text-sm font-semibold text-[#17638C]">
+                <span className="h-0.5 w-8 bg-[#7CCBF7]" aria-hidden="true" />
+                Our mission and vision
+              </figcaption>
+              <blockquote className="mt-8 border-l-4 border-[#7CCBF7] pl-6 font-display text-2xl font-semibold leading-relaxed text-[#14263A] sm:text-3xl lg:pl-8">
+                “We at JD Associates are excited about our future position in a dynamic
+                engineering environment. Our innovative, dynamic and talented team is confident
+                that our character, integrity and honour will continuously inspire us to serve
+                each customer at the highest levels at all times.”
+              </blockquote>
+            </figure>
+            <div className="lg:col-span-5">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-[#CFE6F5] bg-[#E8F5FD] shadow-xl shadow-[#14263A]/15">
+                <img
+                  src="/about/mission.png"
+                  alt="Industrial robots working on components inside a manufacturing facility"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F2338]/30 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* STRENGTHS */}
+        
+
+        {/* Values: one ruled row, no icon bubbles or cards */}
         <section className="py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="mb-12 font-display text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              Our strengths
-            </h2>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {ABOUT_STRENGTHS.map((strength, idx) => (
-                <RevealBlock key={strength.title} delay={idx * 0.03}>
-                  <div className="flex h-full gap-4 rounded-lg bg-white p-6 ring-1 ring-[#102A43]/10">
-                    <span className="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#E45532]">
-                      <Check className="h-4 w-4 text-white" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <h3 className="font-display text-lg font-bold">{strength.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-[#334E68]">{strength.description}</p>
-                    </div>
+            <SectionHeading label="Our principles" className="max-w-2xl">
+              The values that drive us.
+            </SectionHeading>
+            <div className="mt-12 grid grid-cols-1 border-y border-[#CFE6F5] sm:grid-cols-2 lg:grid-cols-4">
+              {values.map((value) => {
+                const Icon = value.icon;
+                return (
+                  <div
+                    key={value.title}
+                    className="border-b border-[#CFE6F5] py-8 last:border-b-0 sm:px-6 sm:first:pl-0 lg:border-b-0 lg:border-l lg:first:border-l-0"
+                  >
+                    <Icon className="h-7 w-7 text-[#17638C]" aria-hidden="true" />
+                    <h3 className="mt-5 font-display text-xl font-bold text-[#14263A]">
+                      {value.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[#64748B]">
+                      {value.description}
+                    </p>
                   </div>
-                </RevealBlock>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* COMPANY DETAILS: title block */}
-        <section className="pb-20 lg:pb-28">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <dl className="grid grid-cols-2 border-2 border-[#102A43] bg-white lg:grid-cols-5">
-              {titleBlock.map((row, i) => (
-                <div
-                  key={row.label}
-                  className={`p-4 sm:p-5 ${i > 0 ? 'lg:border-l lg:border-[#102A43]' : ''} ${
-                    i % 2 === 1 ? 'border-l border-[#102A43] lg:border-l' : ''
-                  } ${i >= 2 ? 'border-t border-[#102A43] lg:border-t-0' : ''} ${
-                    i === 4 ? 'col-span-2 lg:col-span-1' : ''
-                  }`}
-                >
-                  <dt className="text-xs font-medium text-[#64748B]">{row.label}</dt>
-                  <dd className="mt-1.5 font-display text-base font-bold leading-snug tabular-nums sm:text-lg">
-                    {row.value}
-                  </dd>
+        {/* What makes us different */}
+        <section className="bg-[#F5F9FC] py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <div className="lg:col-span-5">
+              <div className="lg:sticky lg:top-28">
+                <SectionHeading label="Why JD Associates">
+                  What makes JD Associates different?
+                </SectionHeading>
+                <div className="group relative mt-8 aspect-[4/3] overflow-hidden rounded-2xl border border-[#CFE6F5] bg-[#0F2338] shadow-xl shadow-[#14263A]/10">
+                  <img
+                    src="/images/custom-machined-parts.jpg"
+                    alt="Metalworking machine and operator in an industrial workshop"
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-105 motion-reduce:transition-none"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F2338]/65 via-transparent to-transparent"
+                    aria-hidden="true"
+                  />
+                  <span className="absolute bottom-5 left-5 rounded-full border border-white/20 bg-[#0F2338]/55 px-4 py-2 text-xs font-semibold tracking-wide text-white backdrop-blur-md">
+                    Precision manufacturing
+                  </span>
                 </div>
+              </div>
+            </div>
+            <ul className="divide-y divide-[#CFE6F5] border-y border-[#CFE6F5] lg:col-span-7">
+              {differences.map((item) => (
+                <li key={item.title} className="flex gap-5 py-8">
+                  <span className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#7CCBF7] text-[#0F2338]">
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-2xl font-bold text-[#14263A]">{item.title}</h3>
+                    <p className="mt-2 max-w-md leading-relaxed text-[#64748B]">
+                      {item.description}
+                    </p>
+                  </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="relative isolate overflow-hidden bg-[#075B91] py-24 lg:py-32">
-          <div className="absolute inset-0 -z-10">
-            <Photo id={PHOTO.cta} w={2000} />
-            <div className="absolute inset-0 bg-[#075B91]/85" />
-          </div>
-          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
-            <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-white lg:text-5xl">
-                Accurate components, fair pricing, and timely delivery
-              </h2>
-              <p className="mt-5 max-w-xl leading-relaxed text-white/75">
-                Every batch gets the same promise: machined accurately to your drawing, quoted at a fair industrial
-                price, and delivered on the agreed date.
+        {/* Team */}
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <div className="lg:order-2 lg:col-span-6">
+              <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#CFE6F5] bg-[#E8F5FD] shadow-xl shadow-[#14263A]/10">
+                <img
+                  src="/about/why%20jd.png"
+                  alt="Manufacturing professionals reviewing equipment on a factory floor"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-105 motion-reduce:transition-none"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F2338]/55 via-transparent to-transparent"
+                  aria-hidden="true"
+                />
+                <span className="absolute bottom-5 left-5 rounded-full border border-white/20 bg-[#0F2338]/55 px-4 py-2 text-xs font-semibold tracking-wide text-white backdrop-blur-md">
+                  The people behind every component
+                </span>
+              </div>
+            </div>
+            <div className="lg:order-1 lg:col-span-6">
+              <SectionHeading label="Our team and expertise">
+                A capable team behind every component.
+              </SectionHeading>
+              <p className="mt-5 leading-relaxed text-[#334E68]">
+                JD Associates is supported by a pool of capable professionals committed to meeting
+                customer expectations in Safety, Quality, Cost and Delivery.
+              </p>
+              <ul className="mt-7 divide-y divide-[#CFE6F5] border-y border-[#CFE6F5]">
+                {teamCapabilities.map((capability) => (
+                  <li
+                    key={capability}
+                    className="flex items-center gap-3 py-3.5 text-sm font-semibold text-[#14263A]"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-[#7CCBF7]" aria-hidden="true" />
+                    {capability}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs leading-relaxed text-[#64748B]">
+                The 15+ years statement refers specifically to sourcing experience, not overall
+                company or employee experience.
               </p>
             </div>
-            <div className="flex shrink-0 flex-wrap gap-3">
-              <Link
-                to="/contact-us/"
-                className="inline-flex items-center gap-2 rounded-md bg-[#E45532] px-7 py-4 text-sm font-semibold text-[#102A43] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#075B91]"
-              >
-                Request a quote
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
+          </div>
+        </section>
+
+        {/* Quality commitment + policy, one continuous dark band */}
+        <section className="bg-[#14263A] py-20 text-white lg:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+              <div className="lg:col-span-5">
+                <SectionHeading label="Our quality commitment" dark>
+                  Quality is at the heart of our manufacturing process.
+                </SectionHeading>
+                <p className="mt-5 leading-relaxed text-white/75">
+                  Quality is our forte, and we abide by international standards of quality while
+                  manufacturing our range. Our quality inspection department tests and monitors
+                  components at every level of production.
+                </p>
+                <p className="mt-4 leading-relaxed text-white/75">
+                  Advanced testing equipment supports reliable inspection results. Continuous
+                  improvement is achieved through teamwork, training and motivation.
+                </p>
+              </div>
+              <ul className="grid grid-cols-1 gap-px self-start overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:col-span-7">
+                {qualityItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.title} className="bg-[#14263A] p-8 sm:p-10">
+                      <Icon className="h-8 w-8 text-[#7CCBF7]" aria-hidden="true" />
+                      <h3 className="mt-6 font-display text-xl font-bold">{item.title}</h3>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className="mt-20 border-t border-white/15 pt-14">
+              <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
+                <div className="lg:col-span-5">
+                  <SectionHeading label="Quality policy" dark>
+                    Our belief. Our quality policy.
+                  </SectionHeading>
+                </div>
+                <p className="leading-relaxed text-white/75 lg:col-span-7 lg:pt-10">
+                  Ever-increasing customer satisfaction is our main goal, reflected through our
+                  commitments, actions, products and services. We believe that what ultimately
+                  matters is the service we provide through quality products and timely delivery.
+                </p>
+              </div>
+              <ul className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-0">
+                {policyItems.map((item) => (
+                  <li
+                    key={item.title}
+                    className="border-t-2 border-[#7CCBF7] pt-5 lg:border-t-0 lg:border-l-2 lg:px-8 lg:py-1 lg:first:border-l-0 lg:first:pl-0"
+                  >
+                    <h3 className="font-display text-xl font-bold">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/70">{item.description}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Suppliers & customers */}
+        <section className="py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <div className="lg:col-span-7 lg:order-2">
+              <SectionHeading label="Prestigious customers">Trusted by industry leaders.</SectionHeading>
+              <ul className="mt-8 grid grid-cols-2 border-l border-t border-[#CFE6F5] sm:grid-cols-4">
+                {CUSTOMER_LOGOS.map((customer) => (
+                  <li
+                    key={customer.name}
+                    className="flex min-h-28 items-center justify-center border-b border-r border-[#CFE6F5] bg-white px-4 py-3"
+                  >
+                    <img
+                      src={customer.src}
+                      alt={`${customer.name} logo`}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-14 max-w-full object-contain"
+                    />
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs leading-relaxed text-[#64748B]">
+                Client logos are shown for company-profile reference.
+              </p>
+            </div>
+
+            <div className="lg:col-span-5 lg:order-1">
+              <SectionHeading label="Supply network">Our raw material supply network.</SectionHeading>
+              <ul className="mt-8 divide-y divide-[#CFE6F5] border-y border-[#CFE6F5]">
+                {suppliers.map((supplier) => (
+                  <li
+                    key={supplier}
+                    className="flex items-center gap-3 py-4 font-display text-lg font-semibold text-[#14263A]"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-[#7CCBF7]" aria-hidden="true" />
+                    {supplier}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-xs text-[#64748B]">
+                Supplier names are shown from the company profile. Official logos require approved
+                assets.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Certification */}
+        <section className="bg-[#F5F9FC] py-20 lg:py-28">
+          <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-8">
+            <div className="lg:col-span-7">
+              <SectionHeading label="Certifications">Our commitment to quality standards.</SectionHeading>
+              <dl className="mt-8 divide-y divide-[#CFE6F5] border-y border-[#CFE6F5]">
+                {certificateFacts.map(([label, value]) => (
+                  <div key={label} className="grid grid-cols-1 gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+                    <dt className="text-sm font-semibold text-[#17638C]">{label}</dt>
+                    <dd className="text-sm font-semibold leading-relaxed text-[#14263A]">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border border-[#CFE6F5] bg-white p-4 shadow-lg shadow-[#14263A]/5 sm:p-5">
+                <div className="flex h-[280px] items-center justify-center overflow-hidden rounded-xl border border-[#CFE6F5] bg-[#F5F9FC] p-2 sm:h-[360px] sm:p-3 lg:h-[400px]">
+                  <img
+                    src="/about/certificate.png"
+                    alt="ISO 9001:2015 quality management certificate for J.D. Associates"
+                    loading="lazy"
+                    decoding="async"
+                    className="block h-full w-auto max-w-full object-contain"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setCertificateOpen(true)}
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#14263A] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#17638C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7CCBF7]"
+                >
+                  View full certificate
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA: the one loud sky-blue block */}
+        <section className="bg-[#7CCBF7] py-20 text-[#0F2338] lg:py-28">
+          <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-10 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
+            <div className="max-w-3xl">
+              <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+                Looking for a reliable precision manufacturing partner?
+              </h2>
+              <p className="mt-5 max-w-2xl leading-relaxed text-[#0F2338]/80">
+                Connect with JD Associates to discuss your engineering component requirements.
+                Our team is committed to understanding customer specifications and supporting
+                quality-focused manufacturing solutions.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
               <Link
                 to="/products/"
-                className="inline-flex items-center gap-2 rounded-md border border-white/35 px-7 py-4 text-sm font-semibold text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="inline-flex items-center gap-2 rounded-full bg-[#0F2338] px-7 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#17638C] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                Browse product catalogue
+                Explore products
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/contact-us/"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-[#0F2338] px-7 py-3.5 text-sm font-bold text-[#0F2338] transition-colors hover:bg-[#0F2338] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                Contact our team
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>
           </div>
         </section>
       </main>
+
+      <CertificateModal open={certificateOpen} onClose={() => setCertificateOpen(false)} />
     </PageShell>
   );
 }

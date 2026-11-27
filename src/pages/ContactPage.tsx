@@ -178,8 +178,10 @@ export function ContactPage() {
   };
 
   const contactRows = [
-    { icon: Phone, label: 'Phone', value: COMPANY_FACTS.contacts.phone },
-    { icon: Mail, label: 'Email', value: COMPANY_FACTS.contacts.email },
+    { icon: Phone, label: 'Navdeep Singh', value: '9810170102' },
+    { icon: Phone, label: 'Harpreet Singh', value: '9999517107' },
+    { icon: Mail, label: 'Email', value: 'JDCNC2010@gmail.com' },
+    { icon: Mail, label: 'Email', value: 'JDNPD2013@gmail.com' },
     { icon: MessageSquare, label: 'WhatsApp', value: COMPANY_FACTS.contacts.whatsapp },
   ];
 
@@ -236,7 +238,7 @@ export function ContactPage() {
                   <p className="text-xs font-semibold uppercase tracking-wider text-white">Manufacturer</p>
                   <h2 className="mt-2 font-display text-2xl font-bold">{COMPANY_FACTS.name}</h2>
                   <p className="mt-1 text-sm text-white">
-                    {COMPANY_FACTS.legalStatus} · Established {COMPANY_FACTS.established}
+                    {COMPANY_FACTS.legalStatus}
                   </p>
 
                   <dl className="mt-7 divide-y divide-white/20 border-y border-white/20">

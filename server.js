@@ -48,6 +48,7 @@ async function startServer() {
       { path: "/", priority: "1.0", changefreq: "weekly" },
       { path: "/about-us/", priority: "0.8", changefreq: "monthly" },
       { path: "/products/", priority: "0.9", changefreq: "weekly" },
+      { path: "/facilities/", priority: "0.8", changefreq: "monthly" },
       { path: "/industries/", priority: "0.8", changefreq: "monthly" },
       { path: "/contact-us/", priority: "0.8", changefreq: "monthly" },
       { path: "/privacy-policy/", priority: "0.3", changefreq: "yearly" },

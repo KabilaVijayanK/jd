@@ -56,9 +56,8 @@ export function SeoHead({ title, description, canonicalPath, breadcrumbs, faqs }
         '@type': 'Organization',
         name: COMPANY_FACTS.name,
         url: origin,
-        foundingDate: '2000-05',
         description:
-          'Manufacturer of precision shafts, axle shafts, cardan shafts, connecting rods, cams, gears, and custom CNC/VMC machined automotive components.',
+          'Precision machining and manufacturing company for engineering components, assemblies and custom CNC/VMC machined parts.',
         areaServed: 'India',
         address: {
           '@type': 'PostalAddress',

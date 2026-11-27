@@ -41,22 +41,19 @@ export interface FaqItem {
 }
 export const COMPANY_FACTS = {
   name: 'J.D. Associates',
-  established: 'May 2000',
-  establishedYear: 2000,
   businessType: 'Manufacturer',
   legalStatus: 'Partnership Firm',
-  teamSize: '51–100 People',
   location: 'Faridabad, Haryana, India',
   address: {
-    line: 'Plot No. 615, Pali Road, Bhakri, N.I.T., Faridabad, Haryana 121001',
-    confirmed: false,
-    statusLabel: 'Pending client confirmation',
+    line: 'Plot No. 6/15, Main Pali Bhakri Road, NIT Faridabad, Haryana – 121001, India',
+    confirmed: true,
+    statusLabel: 'Factory address',
   },
   contacts: {
-    phone: 'Awaiting confirmation',
-    email: 'Awaiting confirmation',
-    whatsapp: 'Awaiting confirmation',
-    confirmed: false,
+    phone: '9810170102 / 9999517107',
+    email: 'JDCNC2010@gmail.com / JDNPD2013@gmail.com',
+    whatsapp: '9810170102',
+    confirmed: true,
   },
   materials: ['Steel', 'Stainless Steel', 'Brass', 'Copper', 'Aluminium'],
   machineryBrands: [
@@ -77,40 +74,65 @@ export const COMPANY_FACTS = {
       role: 'CNC machining centers for complex automotive geometries',
     },
   ],
+  machineEntries: [
+    { name: 'CNC Turning', quantity: 11, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'VMC', quantity: 4, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Traub', quantity: 20, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Production Lathe', quantity: 4, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Drill Machines', quantity: 20, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Grinding Machines', quantity: 8, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Laser Machine', quantity: 1, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Welding Machines', quantity: 2, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: '350 Ton Hydraulic Press', quantity: null, manufacturer: 'Profile to confirm', capacity: '350 Ton' },
+    { name: 'Mechanical Press', quantity: null, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Welding SPM Machine', quantity: null, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Digital Profile Projector', quantity: null, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Surface Roughness Tester', quantity: null, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+    { name: 'Hardness Tester', quantity: null, manufacturer: 'Profile to confirm', capacity: 'Profile to confirm' },
+  ],
 };
 
 export const COMPANY_HIGHLIGHTS = [
   {
     code: '01',
-    metric: 2000,
-    metricPrefix: 'Est. May ',
+    metric: 14,
     isNumeric: true,
-    title: 'Established in May 2000',
-    subtitle: 'Over two decades of continuous manufacturing continuity in Faridabad.',
+    title: 'Machine Categories',
+    subtitle: 'Manufacturing categories listed in the company profile.',
   },
   {
     code: '02',
-    metricLabel: 'CNC & VMC',
-    isNumeric: false,
-    title: 'CNC & VMC Machining',
-    subtitle: 'Equipped with Fanuc, LMW, Ace, and Jyoti machining infrastructure.',
+    metric: 94,
+    isNumeric: true,
+    title: 'Listed Machine Units',
+    subtitle: 'Verified total of listed machine units.',
   },
   {
     code: '03',
-    metricLabel: 'Drawing-Led',
-    isNumeric: false,
-    title: 'Custom Manufacturing',
-    subtitle: 'Components engineered strictly to client drawings and OEM specifications.',
+    metric: 11,
+    isNumeric: true,
+    title: 'CNC Turning Machines',
+    subtitle: 'CNC turning capacity in the manufacturing setup.',
   },
   {
     code: '04',
-    metric: 100,
-    metricPrefix: '51–',
+    metric: 4,
     isNumeric: true,
-    title: 'Skilled Workforce',
-    subtitle: 'Dedicated team of 51–100 professionals focused on precision repeatability.',
+    title: 'VMC Machines',
+    subtitle: 'Vertical machining capacity in the manufacturing setup.',
   },
 ];
+
+export const CUSTOMER_LOGOS = [
+  { name: 'EFACEC', src: '/clients/client1.jpeg' },
+  { name: 'C-SEC', src: '/clients/client2.jpeg' },
+  { name: 'Baroda Moulds & Dies', src: '/clients/client3.jpeg' },
+  { name: 'HGS', src: '/clients/client4.jpeg' },
+  { name: 'Bhartia', src: '/clients/client5.jpeg' },
+  { name: 'Havells', src: '/clients/client6.jpeg' },
+  { name: 'Socomec', src: '/clients/client7.jpeg' },
+  { name: 'Maruti Suzuki', src: '/clients/client8.jpeg' },
+] as const;
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   {
@@ -330,39 +352,39 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
 export const WHY_CHOOSE_ITEMS = [
   {
     code: '01',
-    title: 'Experience Since 2000',
+    title: 'Quality-Focused Manufacturing',
     description:
-      'Operating as an established precision manufacturer since May 2000, supporting automotive supply chains with steady execution.',
+      'Quality checks support components across the manufacturing process.',
   },
   {
     code: '02',
-    title: 'Modern CNC and VMC Machines',
+    title: 'Advanced Machinery',
     description:
-      'Machining floor equipped with Fanuc, LMW, Ace, and Jyoti CNC turning and vertical machining systems.',
+      'CNC turning, VMC, Traub, grinding and specialised production equipment.',
   },
   {
     code: '03',
-    title: 'Experienced R&D Team',
+    title: 'Skilled Professionals',
     description:
-      'Dedicated R&D department supporting drawing interpretation, process planning, and fixture development.',
+      'Engineers and experienced manufacturing personnel support production requirements.',
   },
   {
     code: '04',
-    title: 'Wide Product Range',
+    title: 'Precision Inspection',
     description:
-      'From EV rear axle shafts and cardan shafts to connecting rods, cams, gears, and custom receiving gauges.',
+      'Dedicated metrology and inspection facilities support manufacturing quality.',
   },
   {
     code: '05',
-    title: 'Customised Solutions',
+    title: 'Customer-Specific Manufacturing',
     description:
-      'Flexible multi-metal machining across Steel, Stainless Steel, Brass, Copper, and Aluminium per client drawings.',
+      'Components can be manufactured according to customer drawings and specifications.',
   },
   {
     code: '06',
-    title: 'Timely Delivery',
+    title: 'Continuous Improvement',
     description:
-      'Committed to accurate components, transparent fair pricing, and dependable delivery schedules.',
+      'Workforce development, training, innovation and quality enhancement guide ongoing improvement.',
   },
 ];
 
@@ -442,34 +464,44 @@ export const INDUSTRIES_LIST: IndustryItem[] = [
 
 export const HOME_FAQS: FaqItem[] = [
   {
-    question: 'What types of components does J.D. Associates manufacture?',
+    question: 'What types of precision components does JD Associates manufacture?',
     answer:
-      'J.D. Associates manufactures Axle Shafts (including 17 inch, 17.2 inch, 17.5 inch, 18 inch, and 18.5 inch EV variants), Metal Shafts (including EV Exel and Excel Shafts), Cardan Shafts (including RMU Welding Shaft and Shaft 6134), Connecting Rods, Cams and Gears, and Custom Machined Parts, Jig Fixtures, and Receiving Gauges.',
+      'JD Associates manufactures assembly products, precision shafts and turned components, machined parts, gears and metal components, and custom drawing-based components including jig fixtures and receiving gauges.',
   },
   {
-    question: 'Do you manufacture components according to custom client drawings?',
+    question: 'Does JD Associates manufacture components according to customer drawings?',
     answer:
-      'Yes. With our CNC and VMC machining capabilities and experienced R&D department, we manufacture precision shafts, machined parts, jig fixtures, and receiving gauges strictly according to client engineering drawings and specifications.',
+      'Yes. Components are manufactured according to customer drawings and specifications, subject to drawing review and feasibility confirmation.',
   },
   {
-    question: 'Which metals and raw materials can you machine?',
+    question: 'What CNC and VMC machining facilities are available?',
     answer:
-      'Our CNC and VMC machining facility works with Steel, Stainless Steel, Brass, Copper, and Aluminium depending on the functional and structural requirements specified in your drawing.',
+      'The manufacturing setup includes 11 CNC turning machines and 4 VMC machines, along with Traub, production lathe, drilling, grinding, laser and welding equipment.',
   },
   {
-    question: 'What machining infrastructure does J.D. Associates operate?',
+    question: 'What quality inspection equipment is available?',
     answer:
-      'Our Faridabad manufacturing setup utilizes CNC and VMC machines from established machinery brands including Fanuc, LMW, Ace, and Jyoti.',
+      'The company profile lists a digital profile projector, surface roughness tester, hardness tester and dedicated metrology support for precision inspection.',
   },
   {
-    question: 'Which automotive OEM segments do you serve?',
+    question: 'Does JD Associates support custom manufacturing requirements?',
     answer:
-      'J.D. Associates serves two-wheeler, three-wheeler (including E-Rickshaw and EV axle applications), and four-wheeler OEMs, alongside custom engineering and switchgear requirements subject to drawing review.',
+      'Yes. Custom CNC and VMC machined parts, jig fixtures and receiving gauges can be developed from customer technical drawings.',
   },
   {
-    question: 'How can OEM procurement teams request a manufacturing quote?',
+    question: 'What types of mechanical assemblies does the company manufacture?',
     answer:
-      'You can submit your component requirements, estimated batch quantities, and optional engineering drawings through our Contact Us / Request a Quote page. Official phone, email, and WhatsApp channels are currently marked for final client confirmation.',
+      'The listed assembly products include CDV3 Assembly, Bellow Assembly and CDV3 Truck Assembly.',
+  },
+  {
+    question: 'How can customers submit technical drawings for quotation?',
+    answer:
+      'Use the Contact Us or Request a Quote page to provide component details and attach a PDF, CAD or image drawing. The supported upload limit is 5 MB.',
+  },
+  {
+    question: 'What manufacturing and quality certifications does JD Associates hold?',
+    answer:
+      'The company profile identifies ISO 9001:2015 certification. Certification documents should be verified through the official company representative before publication or tender use.',
   },
 ];
 
@@ -508,6 +540,6 @@ export const ABOUT_STRENGTHS = [
     code: '06',
     title: 'Skilled Professionals',
     description:
-      'Partnership-led team of 51–100 skilled machinists, engineers, and operational staff.',
+      'Skilled machinists, engineers and operational personnel support manufacturing requirements.',
   },
 ];
